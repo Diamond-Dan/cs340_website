@@ -23,13 +23,13 @@
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
         <tr>
+            <td>{{this.chat_id}}</td>
             <td>{{this.ticket_id}}</td>
+            <td>{{this.chat_history}}</td>
+            <td>{{this.chat_date}}</td>
+            <td>{{this.chat_time}}</td>
             <td>{{this.Users_user_id}}</td>
-            <td>{{this.ticket_subject}}</td>
-            <td>{{this.ticket_body}}</td>
-            <td>{{this.create_date}}</td>
-            <td>{{this.ticket_status}}</td>
-            <td>{{this.tag_name}}</td>
+            <td>{{this.agent_id}}</td>
         </tr>
         {{/each}}
     </tbody>
