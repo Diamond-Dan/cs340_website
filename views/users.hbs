@@ -1,7 +1,7 @@
 <!-- index.hbs -->
 
 {{!-- Create a table --}}
-<table>
+<table id="user_table">
 
     {{!-- Header section --}}
     <thead>
@@ -31,3 +31,22 @@
         {{/each}}
     </tbody>
 </table>
+<h2>Add an entry</h2>
+<p>To add a new user, please enter the user information below and click 'Submit'!</p>
+<form id="add-user-form-ajax">
+    <label for="input-user_name">user_name: </label>
+    <input type="text" name="input-user_name" id="input-user_name">
+    
+    <label for="input-user_email">user_email: </label>
+    <input type="text" name="input-user_email" id="input-user_email">
+
+    <label for="input-user_Phone_number">user_Phone_number: </label>
+    <input type="text" name="input-user_Phone_number" id="input-user_Phone_number">
+
+
+    
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_user.js"></script>

@@ -1,7 +1,7 @@
 <!-- index.hbs -->
 
 {{!-- Create a table --}}
-<table>
+<table id="agent_table">
 
     {{!-- Header section --}}
     <thead>
@@ -29,3 +29,18 @@
         {{/each}}
     </tbody>
 </table>
+<h2>Add an entry</h2>
+<p>To add a new agent, please enter the agent information below and click 'Submit'!</p>
+<form id="add-agent-form-ajax">
+    <label for="input-agent_id">agent_id: </label>
+    <input type="number" name="input-agent_id" id="input-agent_id">
+    
+    <label for="input-agent_name">agent_name: </label>
+    <input type="text" name="input-agent_name" id="input-agent_name">
+
+    
+
+    
+    <input type="submit">
+</form>
+<script src="./js/add_agent.js"></script>
