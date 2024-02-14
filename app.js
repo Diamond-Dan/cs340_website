@@ -30,6 +30,13 @@ app.get('/', function(req, res)                 // This is the basic syntax for 
         db.pool.query(query1,function(err, rows, fields){
             res.render('index', {data: rows});         // This function literally sends the string "The server is running!" to the computer
         });
+    });            
+app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
+    {
+       let query1 ='SELECT * FROM Tickets;';
+        db.pool.query(query1,function(err, rows, fields){
+            res.render('tickets', {data: rows});         // This function literally sends the string "The server is running!" to the computer
+        });
     });                                         // requesting the web site.
 
 

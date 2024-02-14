@@ -1,0 +1,63 @@
+<!-- index.hbs -->
+<h2>View and Add Agents Tickets</h2>
+{{!-- Create a table --}}
+<table id="ticket_table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print name --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.ticket_id}}</td>
+            <td>{{this.Users_user_id}}</td>
+            <td>{{this.ticket_subject}}</td>
+            <td>{{this.ticket_body}}</td>
+            <td>{{this.create_date}}</td>
+            <td>{{this.ticket_status}}</td>
+            <td>{{this.tag_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<!-- /views/index.hbs -->
+
+{{!-- Form to add a record to the table  --}}
+<h2>Add an entry</h2>
+<p>To add a new ticket, please enter the ticket information below and click 'Submit'!</p>
+<form id="add-ticket-form-ajax">
+    <label for="input-user_id">Users.user_id: </label>
+    <input type="number" name="input-user_id" id="input-user_id">
+    
+    <label for="input-ticket_subject">ticket_subject: </label>
+    <input type="text" name="input-ticket_subject" id="input-ticket_subject">
+
+    <label for="input-ticket_body">ticket_body: </label>
+    <input type="text" name="input-ticket_body" id="input-ticket_body">
+
+    <label for="input-ticket_status">ticket_status: </label>
+    <input type="number" name="input-ticket_status" id="input-ticket_status">
+
+    <label for="input-tag_name">tag_name: </label>
+    <input type="text" name="input-tag_name" id="input-tag_name">
+
+    
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_ticket.js"></script>
