@@ -16,6 +16,9 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 app.set('views', __dirname + '/views');
 // Database
 var db = require('./database/db-connector')
+// css in public 
+app.use(express.static('public'));
+
 /*
     ROUTES
 */
@@ -65,3 +68,5 @@ app.get('/agents', (req, res) => {
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
+
+
