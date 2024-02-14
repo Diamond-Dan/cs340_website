@@ -17,7 +17,9 @@ app.set('views', __dirname + '/views');
 // Database
 var db = require('./database/db-connector')
 // css in public 
-app.use(express.static('public'));
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
 
 /*
     ROUTES
@@ -62,6 +64,61 @@ app.get('/agents', (req, res) => {
             res.render('agents', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
         });
     }); 
+
+/*
+POST
+
+*/
+// app.js - ROUTES section
+
+app.post('/add-ticket-ajax', function(req, res) 
+{
+    
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    
+    // Capture NULL values
+    let ticket_status = parseInt(data.ticket_status);
+    if (isNaN(ticket_status))
+    {
+        ticket_status = 5
+    }
+
+   
+    // Create the query and run it on the database
+    add_row_to_table = `INSERT INTO Tickets (Users_user_id, ticket_subject, ticket_body, ticket_status,tag_name) 
+    VALUES (${data.Users_user_id}, '${data.ticket_subject}', '${data.ticket_body}', ${ticket_status},'${data.tag_name}')`;
+    db.pool.query(add_row_to_table, function(error, rows, fields){
+        // Check to see if there was an error
+        if (error) {
+            //console.log(data)
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on bsg_people
+            get_new_row = `SELECT * FROM Tickets ORDER BY ticket_id DESC LIMIT 1;`;
+            db.pool.query(get_new_row, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
 /*
     LISTENER
 */
