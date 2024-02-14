@@ -1,7 +1,7 @@
-<!-- index.hbs -->
+<!-- agents_has_tickets.hbs -->
 
 {{!-- Create a table --}}
-<table>
+<table id="agent_ticket_table">
 
     {{!-- Header section --}}
     <thead>
@@ -29,3 +29,19 @@
         {{/each}}
     </tbody>
 </table>
+
+<h2>Add an entry</h2>
+<p>To add a new ticket, please enter the ticket information below and click 'Submit'!</p>
+<form id="add-agent-ticket-form-ajax">
+    <label for="input-agent_id">agent_id: </label>
+    <input type="number" name="input-agent_id" id="input-agent_id">
+    
+    <label for="input-ticket_id">ticket_id: </label>
+    <input type="number" name="input-ticket_id" id="input-ticket_id">
+
+    
+
+    
+    <input type="submit">
+</form>
+<script src="./js/add_agent_ticket.js"></script>
