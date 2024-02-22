@@ -31,11 +31,18 @@
         <th>
             user id
         </th>
+        <th>
+            user name
+        </th>
     
 
         <th>
             agent id
         </th>
+        <th>
+            agent name
+        </th>
+    
     </thead>
 
     {{!-- Body section --}}
@@ -50,7 +57,9 @@
             <td>{{this.chat_date}}</td>
             <td>{{this.chat_time}}</td>
             <td>{{this.Users_user_id}}</td>
+            <td>{{this.user_name}}</td>
             <td>{{this.agent_id}}</td>
+            <td>{{this.agent_name}}</td>
         </tr>
         {{/each}}
     </tbody>
