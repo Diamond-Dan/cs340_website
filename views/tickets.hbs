@@ -128,5 +128,30 @@
 
 </form>
 
+<form action="/submit-url" method="post">
+    <h2>search</h2>
+    <p>can only search by a single input</p>
+    <label for="department">Department: </label>
+    <select id="department" name="department">
+        {{#each department}}
+        <option value="{{this.tag_id}}">{{this.tag_type}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+<br>
+
+<form action="/submit-url" method="post">
+    <label for="status">Status</label>
+    <select name="status" id="status">
+        <option value="0">0</option>
+        <option value="1">1</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_ticket.js"></script>
