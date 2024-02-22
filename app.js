@@ -26,11 +26,11 @@ app.use(express.static('public'))
 */
 app.get('/', function(req, res)                 // This is the basic syntax for what is called a 'route'
     {
-       let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('index', {data: rows});         // This function literally sends the string "The server is running!" to the computer
-        });
+      
+            res.render('index');         // This function literally sends the string "The server is running!" to the computer
+        
     });            
+
 
 app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
 {
@@ -69,8 +69,10 @@ app.get('/ticket_chats', (req, res) => {
                 return res.render("ticket_chats", {data: tickets, users: user, agents:agent})
             })    
            })
+          
         });
-    });
+    });;  
+
 
 app.get('/users', (req, res) => {
     let query2 ='SELECT * FROM Users;';
@@ -85,8 +87,8 @@ app.get('/tags', (req, res) => {
         });
     });
 app.get('/agents_has_tickets', (req, res) => {
-    let query2 ='SELECT * FROM Agents_has_Tickets;';
-        db.pool.query(query2,function(err, rows2, fields){
+    let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
+        db.pool.query(query1,function(err, rows2, fields){
             res.render('agents_has_tickets', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
         });
     });
@@ -113,7 +115,7 @@ app.post('/add-ticket-ajax', function(req, res)
     let ticket_status = parseInt(data.ticket_status);
     if (isNaN(ticket_status))
     {
-        ticket_status = 5
+        ticket_status = 0
     }
 
    
@@ -158,4 +160,7 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
 
+/*
+Handlebars helpers
+*/
 
