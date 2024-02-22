@@ -33,11 +33,17 @@ app.get('/', function(req, res)                 // This is the basic syntax for 
     });            
 app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
     {
-       let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('tickets', {data: rows});         // This function literally sends the string "The server is running!" to the computer
-        });
-    });                                         // requesting the web site.
+        let query1 = "select * from Tickets"
+        let query2 = "select * from Users"
+        db.pool.query(query1, function(error, rows, fields){
+            let tickets = rows;
+            db.pool.query(query2, (error, rows, fields) => {
+                let users = rows;
+                
+                return res.render("tickets", {data: tickets, user_ids: users})
+            })
+        })
+  });                                         // requesting the web site.
 
 
 app.get('/ticket_chats', (req, res) => {
@@ -94,7 +100,7 @@ app.post('/add-ticket-ajax', function(req, res)
    
     // Create the query and run it on the database
     add_row_to_table = `INSERT INTO Tickets (Users_user_id, ticket_subject, ticket_body, ticket_status,tag_name) 
-    VALUES (${data.Users_user_id}, '${data.ticket_subject}', '${data.ticket_body}', ${ticket_status},'${data.tag_name}')`;
+    VALUES (${data.Users_user_id}, '${data.ticket_subject}', '${data.ticket_body}', ${0},'${data.tag_name}')`;
     db.pool.query(add_row_to_table, function(error, rows, fields){
         // Check to see if there was an error
         if (error) {

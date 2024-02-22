@@ -12,15 +12,14 @@ addTicketForm.addEventListener("submit", function (e) {
     //console.log(inputuser_id)
     let inputticket_subject = document.getElementById("input-ticket_subject");
     let inputticket_body = document.getElementById("input-ticket_body");
-    let inputticket_status = document.getElementById("input-ticket_status");
     let inputtag_name = document.getElementById("input-tag_name");
 
     // Get the values from the form fields
-    let user_idValue = inputuser_id.value;
+    let user_idValue = parseInt(inputuser_id);
     //console.log(user_idValue)
     let ticket_subjectValue = inputticket_subject.value;
     let ticket_bodyValue = inputticket_body.value;
-    let ticket_statusValue = inputticket_status.value;
+    let ticket_statusValue = parseInt(0);
     let tag_nameValue = inputtag_name.value;
 
     // Put our data we want to send in a javascript object

@@ -9,11 +9,13 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
             <th>
-                {{@key}}
+                tag id
             </th>
-            {{/each}}
+
+            <th>
+                department
+            </th>
         </tr>
     </thead>
 
@@ -32,10 +34,8 @@
 <h2>Add an entry</h2>
 <p>To add a new tag, please enter the tag information below and click 'Submit'!</p>
 <form id="add-tags-form-ajax">
-    <label for="input-tag_id">tag_id: </label>
-    <input type="number" name="input-tag_id" id="input-tag_id">
     
-    <label for="input-tag_type">agent_name: </label>
+    <label for="input-tag_type">department: </label>
     <input type="text" name="input-tag_type" id="input-tag_type">
 
     
