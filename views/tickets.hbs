@@ -8,21 +8,43 @@
 
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-                
-            </th>
-            {{/each}}
             
-                 <th style="width:100px;">
-            Edit
-            </th>
-               <th style="width:150px;">
-            Delete
-            </th>
-        </tr>
+        <th>
+            ticket id
+        </th>
+
+        <th>
+            user id
+        </th>
+
+        <th>
+            subject
+        </th>
+
+        <th>
+            body
+        </th>
+
+        <th>
+            date created
+        </th>
+
+        <th>
+            statues
+        </th>
+
+        <th>
+            department
+        </th>
+
+            
+            <th style="width:100px;">
+        Edit
+        </th>
+            <th style="width:150px;">
+        Delete
+        </th>
+
     </thead>
 
     {{!-- Body section --}}
@@ -50,8 +72,15 @@
 <h2>Add an entry</h2>
 <p>To add a new ticket, please enter the ticket information below and click 'Submit'!</p>
 <form id="add-ticket-form-ajax">
-    <label for="input-user_id">Users.user_id: </label>
-    <input type="number" name="input-user_id" id="input-user_id">
+    
+    <label for="input-user-id">user id: </label>
+    <select id="dropdown">
+        <option value="">select a user id</option>
+        {{#each user_ids}}
+        <option value="{{this.user_id}}">{{this.user_id}}</option>
+        {{/each}}
+    </select>
+
     
     <label for="input-ticket_subject">ticket_subject: </label>
     <input type="text" name="input-ticket_subject" id="input-ticket_subject">
@@ -59,14 +88,44 @@
     <label for="input-ticket_body">ticket_body: </label>
     <input type="text" name="input-ticket_body" id="input-ticket_body">
 
-    <label for="input-ticket_status">ticket_status: </label>
-    <input type="number" name="input-ticket_status" id="input-ticket_status">
-
-    <label for="input-tag_name">tag_name: </label>
-    <input type="text" name="input-tag_name" id="input-tag_name">
-
+    <label for="input-tag_name">department: </label>
+       <select id="dropdown">
+        <option value="">select a department</option>
+        {{#each department}}
+        <option value="{{this.tag_id}}">{{this.tag_type}}</option>
+        {{/each}}
+    </select>
     
     <input type="submit">
+</form>
+
+<form>
+
+    <h2>Claim a ticket</h2>
+
+    <label for="agent">
+        Agent
+    </label>
+    
+    <select name="agent-drop" id="agent-dop">
+        <option value="">please select your employee id</option>
+        {{#each agents}}
+        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        {{/each}}
+    </select>
+
+    <select name="ticket-to-claim" id="claim-id">
+        <option>
+            please select the ticket you wish to claim
+        </option>
+        {{#each data}}
+        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        {{/each}}
+
+    </select>
+
+    <input type="submit">
+
 </form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}

@@ -8,13 +8,34 @@
 
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-        </tr>
+        <th>
+            chat id
+        </th>
+
+        <th>
+            ticket id
+        </th>
+
+        <th>
+            message
+        </th>
+
+        <th>
+            date
+        </th>
+
+        <th>
+            time
+        </th>
+
+        <th>
+            user id
+        </th>
+    
+
+        <th>
+            agent id
+        </th>
     </thead>
 
     {{!-- Body section --}}
@@ -39,17 +60,33 @@
 <p>To add a new chat, please enter the ticket chat information below and click 'Submit'!</p>
 <form id="add-chat-form-ajax">
 
-    <label for="input-ticket_id">ticket_id: </label>
-    <input type="number" name="input-ticket_id" id="input-ticket_id">
+    <label for="add-message-ticket-id">ticket id</label>
+    <select name="add-message" id="add-message-ticket-id">
+        <option value="">please select a ticket id</option>
+        {{#each data}}
+        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        {{/each}}
+    </select>
 
-    <label for="input-chat_history">chat_history: </label>
+    <label for="input-chat_history">message</label>
     <input type="text" name="input-chat_history" id="input-chat_history">
 
-    <label for="input-Users_user_id">Users_user_id: </label>
-    <input type="number" name="input-Users_user_id" id="input-Users_user_id">
+    <label for="input-Users_user_id">user id</label>
+    <select name="user-id" id="message-user-id">
+        <option value="">please select userid</option>
+        {{#each users}}
+        <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_email}}</option>
+        {{/each}}
+    </select>
+
 
     <label for="input-agent_id">agent_id: </label>
-    <input type="number" name="input-agent_id" id="input-agent_id">
+    <select name="agent-id" id="messaged-agent-id">
+        <option value="">select your employee id</option>
+        {{#each agents}}
+        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        {{/each}}
+    </select>
 
     
     <input type="submit">
