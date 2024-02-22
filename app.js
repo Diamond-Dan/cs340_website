@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 2564;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -30,56 +30,50 @@ app.get('/', function(req, res)                 // This is the basic syntax for 
             res.render('index');         // This function literally sends the string "The server is running!" to the computer
         
     });            
-    app.get('/tickets', function(req, res) {
-        let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1, function(err, rows, fields) {
-            if (err) {// Added error checking for K 
-                // Send error
-                console.error('Can not get tickets from SQL server:', err);
-                res.status(500).send('Can not get tickets from SQL server');
-                return;
-            }
-    
-            // change date row slicing it here
-            const change_rows = rows.map((row) => {
-               
-                const new_date_row = new Date(row.create_date).toDateString(); // Formats to "Weekday Month Day Year"
-                
-                return {
-                    ...row,
-                    create_date: new_date_row // Overwrite create_date with new_date_row 
-                    
-                };
-            });
-    
-            // 
-            res.render('tickets', {data: change_rows});
-        });
-    });;                                     
+
+
+app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
+{
+    let query1 = "select * from Tickets"
+    let query2 = "select * from Users"
+    let query3 = "select * from Tags"
+    let query4 = "select * from Agents"
+    db.pool.query(query1, function(error, rows, fields){
+        let tickets = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            let users = rows;
+            db.pool.query(query3, (error, rows, fields) => {
+                let tags = rows
+                db.pool.query(query4, (error, rows, fields) => {
+                    let agent = rows
+                    return res.render("tickets", {data: tickets, user_ids: users, department: tags, agents:agent})
+                })
+            })
+        })
+    })
+}); 
+
 
 
 app.get('/ticket_chats', (req, res) => {
-    let query2 ='SELECT * FROM Ticket_Chats;';
-        db.pool.query(query2,function(err, rows, fields){
-            if (err) {// Added error checking for K 
-                // Send error
-                console.error('Can not get chats from SQL server:', err);
-                res.status(500).send('Can not get chats from SQL server');
-                return;
-            }
-    
-            // change date row slicing it here
-            const change_rows = rows.map((row) => {
-                const new_date_row = new Date(row.chat_date).toDateString(); // Formats to "Weekday Month Day Year"
-                
-                return {
-                    ...row,
-                    chat_date: new_date_row // Overwrite chat_date with new_date_row 
-                };
-            });
-            res.render('ticket_chats', {data: change_rows});
+    let query1 ='SELECT * FROM Ticket_Chats;';
+    let query2 = "select * from Users";
+    let query3 = "select * from Agents";
+        db.pool.query(query1,function(error, rows, fields){
+            let tickets = rows
+            db.pool.query(query2, (error, rows, fields) => {
+            let user = rows
+            db.pool.query(query3, (error, rows, fields) => {
+                let agent = rows
+                console.log(agent)
+                return res.render("ticket_chats", {data: tickets, users: user, agents:agent})
+            })    
+           })
+          
         });
-    });;                    
+    });;  
+
+
 app.get('/users', (req, res) => {
     let query2 ='SELECT * FROM Users;';
         db.pool.query(query2,function(err, rows2, fields){

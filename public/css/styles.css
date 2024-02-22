@@ -62,8 +62,14 @@ thead {
 }
 
 
+th {
+  text-align: center;
+  text-transform: capitalize;
+}
 
-
+td {
+  text-align: center;
+}
 
  
 
