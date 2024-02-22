@@ -14,6 +14,12 @@
                 {{@key}}
             </th>
             {{/each}}
+                 <th style="width:100px;">
+            Edit
+            </th>
+               <th style="width:150px;">
+            Delete
+            </th>
         </tr>
     </thead>
 
@@ -25,6 +31,8 @@
         <tr>
             <td>{{this.agent_id}}</td>
             <td>{{this.agent_name}}</td>
+            <td><button type="button">Edit Entry</button>
+            <td><button type="button">Delete Entry</button>
         </tr>
         {{/each}}
     </tbody>

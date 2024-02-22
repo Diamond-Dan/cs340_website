@@ -2,11 +2,12 @@ body{
   background-color: #E3E1D9;
   font-size:large;
 }
-  
 nav {
   text-align: center;
-  margin-top: 50px;
-}
+  margin-top: 80px;
+  margin-bottom: 80px;
+  
+} 
 
 #globalNav a{
 
