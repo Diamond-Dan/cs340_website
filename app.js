@@ -26,27 +26,60 @@ app.use(express.static('public'))
 */
 app.get('/', function(req, res)                 // This is the basic syntax for what is called a 'route'
     {
-       let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('index', {data: rows});         // This function literally sends the string "The server is running!" to the computer
-        });
+      
+            res.render('index');         // This function literally sends the string "The server is running!" to the computer
+        
     });            
-app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
-    {
-       let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('tickets', {data: rows});         // This function literally sends the string "The server is running!" to the computer
+    app.get('/tickets', function(req, res) {
+        let query1 ='SELECT * FROM Tickets;';
+        db.pool.query(query1, function(err, rows, fields) {
+            if (err) {// Added error checking for K 
+                // Send error
+                console.error('Can not get tickets from SQL server:', err);
+                res.status(500).send('Can not get tickets from SQL server');
+                return;
+            }
+    
+            // change date row slicing it here
+            const change_rows = rows.map((row) => {
+               
+                const new_date_row = new Date(row.create_date).toDateString(); // Formats to "Weekday Month Day Year"
+                
+                return {
+                    ...row,
+                    create_date: new_date_row // Overwrite create_date with new_date_row 
+                    
+                };
+            });
+    
+            // 
+            res.render('tickets', {data: change_rows});
         });
-    });                                         // requesting the web site.
+    });;                                     
 
 
 app.get('/ticket_chats', (req, res) => {
     let query2 ='SELECT * FROM Ticket_Chats;';
-        db.pool.query(query2,function(err, rows2, fields){
-            res.render('ticket_chats', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
+        db.pool.query(query2,function(err, rows, fields){
+            if (err) {// Added error checking for K 
+                // Send error
+                console.error('Can not get chats from SQL server:', err);
+                res.status(500).send('Can not get chats from SQL server');
+                return;
+            }
+    
+            // change date row slicing it here
+            const change_rows = rows.map((row) => {
+                const new_date_row = new Date(row.chat_date).toDateString(); // Formats to "Weekday Month Day Year"
+                
+                return {
+                    ...row,
+                    chat_date: new_date_row // Overwrite chat_date with new_date_row 
+                };
+            });
+            res.render('ticket_chats', {data: change_rows});
         });
-    });
-
+    });;                    
 app.get('/users', (req, res) => {
     let query2 ='SELECT * FROM Users;';
         db.pool.query(query2,function(err, rows2, fields){
@@ -88,7 +121,7 @@ app.post('/add-ticket-ajax', function(req, res)
     let ticket_status = parseInt(data.ticket_status);
     if (isNaN(ticket_status))
     {
-        ticket_status = 5
+        ticket_status = 0
     }
 
    
@@ -133,4 +166,7 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
 
+/*
+Handlebars helpers
+*/
 
