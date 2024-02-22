@@ -93,8 +93,8 @@ app.get('/tags', (req, res) => {
         });
     });
 app.get('/agents_has_tickets', (req, res) => {
-    let query2 ='SELECT * FROM Agents_has_Tickets;';
-        db.pool.query(query2,function(err, rows2, fields){
+    let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
+        db.pool.query(query1,function(err, rows2, fields){
             res.render('agents_has_tickets', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
         });
     });
