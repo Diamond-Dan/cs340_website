@@ -1,7 +1,7 @@
 <!-- index.hbs -->
-
+<h2>View and Add Tags</h2>
 {{!-- Create a table --}}
-<table>
+<table id="tags_table">
 
     {{!-- Header section --}}
     <thead>
@@ -29,3 +29,18 @@
         {{/each}}
     </tbody>
 </table>
+<h2>Add an entry</h2>
+<p>To add a new tag, please enter the tag information below and click 'Submit'!</p>
+<form id="add-tags-form-ajax">
+    <label for="input-tag_id">tag_id: </label>
+    <input type="number" name="input-tag_id" id="input-tag_id">
+    
+    <label for="input-tag_type">agent_name: </label>
+    <input type="text" name="input-tag_type" id="input-tag_type">
+
+    
+
+    
+    <input type="submit">
+</form>
+<script src="./js/add_tag.js"></script>

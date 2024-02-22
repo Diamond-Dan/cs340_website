@@ -1,7 +1,7 @@
 <!-- index.hbs -->
-
+<h2>View and Add Ticket conversations</h2>
 {{!-- Create a table --}}
-<table>
+<table id="chats_table">
 
     {{!-- Header section --}}
     <thead>
@@ -34,3 +34,26 @@
         {{/each}}
     </tbody>
 </table>
+
+<h2>Add an entry</h2>
+<p>To add a new chat, please enter the ticket chat information below and click 'Submit'!</p>
+<form id="add-chat-form-ajax">
+
+    <label for="input-ticket_id">ticket_id: </label>
+    <input type="number" name="input-ticket_id" id="input-ticket_id">
+
+    <label for="input-chat_history">chat_history: </label>
+    <input type="text" name="input-chat_history" id="input-chat_history">
+
+    <label for="input-Users_user_id">Users_user_id: </label>
+    <input type="number" name="input-Users_user_id" id="input-Users_user_id">
+
+    <label for="input-agent_id">agent_id: </label>
+    <input type="number" name="input-agent_id" id="input-agent_id">
+
+    
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_chat.js"></script>

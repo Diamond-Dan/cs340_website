@@ -1,7 +1,7 @@
-<!-- index.hbs -->
-
+<!-- agents_has_tickets.hbs -->
+<h2>View and Add Agents Assigned to Tickets</h2>
 {{!-- Create a table --}}
-<table>
+<table id="agent_ticket_table">
 
     {{!-- Header section --}}
     <thead>
@@ -25,7 +25,24 @@
         <tr>
             <td>{{this.agent_id}}</td>
             <td>{{this.ticket_id}}</td>
+           
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<h2>Add an entry</h2>
+<p>To add a new agent ticket, please enter the agent and ticket id information below and click 'Submit'!</p>
+<form id="add-agent-ticket-form-ajax">
+    <label for="input-agent_id">agent_id: </label>
+    <input type="number" name="input-agent_id" id="input-agent_id">
+    
+    <label for="input-ticket_id">ticket_id: </label>
+    <input type="number" name="input-ticket_id" id="input-ticket_id">
+
+    
+
+    
+    <input type="submit">
+</form>
+<script src="./js/add_agent_ticket.js"></script>
