@@ -115,7 +115,7 @@ app.get('/users', (req, res) => {
         });
     });
 app.get('/tags', (req, res) => {
-    let query2 ='SELECT * FROM Tags;';
+    let query2 ='SELECT * FROM Tags ORDER BY tag_id;';
         db.pool.query(query2,function(err, rows2, fields){
             res.render('tags', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
         });

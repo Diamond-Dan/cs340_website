@@ -105,7 +105,7 @@
 
     <h2>Search</h2>
     <p>can only search by one</p>
-    <label for="ticket id"> ticket id</label>
+    <label for="ticket id"> Ticket ID</label>
     <select name="search-message" id="search-message-ticket-id">
         <option value="">please select a ticket id</option>
         {{#each tick_id}}
@@ -119,7 +119,7 @@
 <br>
 
 <form action="/submit-url" method="post">
-    <label for="user search">user:</label>
+    <label for="user search">User:</label>
     <select>
         <option value="">please select user id</option>
         {{#each users}}
@@ -134,7 +134,7 @@
 <br>
 
 <form action="/submit-url" method="post">
-    <label for="agent search">agnet:</label>
+    <label for="agent search">Agent:</label>
     <select name="agent-id" id="messaged-agent-id">
     <option value="">select employee id</option>
     {{!-- {{#each agents}}
