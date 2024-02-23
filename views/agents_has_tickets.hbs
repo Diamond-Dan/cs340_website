@@ -9,11 +9,9 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
+           <th>Agent ID #</th>
+           <th>Agent Name</th>
+           <th>Ticket Claimed</th>
         </tr>
     </thead>
 
@@ -24,6 +22,7 @@
         {{#each data}}
         <tr>
             <td>{{this.agent_id}}</td>
+            <td>{{this.agent_name}}</td>
             <td>{{this.ticket_id}}</td>
            
         </tr>
@@ -31,18 +30,35 @@
     </tbody>
 </table>
 
-<h2>Add an entry</h2>
-<p>To add a new agent ticket, please enter the agent and ticket id information below and click 'Submit'!</p>
-<form id="add-agent-ticket-form-ajax">
-    <label for="input-agent_id">agent_id: </label>
-    <input type="number" name="input-agent_id" id="input-agent_id">
-    
-    <label for="input-ticket_id">ticket_id: </label>
-    <input type="number" name="input-ticket_id" id="input-ticket_id">
+<h2>You can not add an entry here</h2>
+<p>You cannot assign tickets to agents here, you must claim a ticket on the tickets page</p>
 
-    
+<form action="/submit-url" method="post">
+    <h2>search</h2>
+    <p>can only search by one</p>
+    <label for="agent_id">agent</label>
+    <select name="agent-drop" id="agent-dop">
+        <option value="">please select employee id</option>
+        {{#each agents}}
+        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        {{/each}}
+    </select>
 
-    
-    <input type="submit">
+    <input type="submit" value="Submit">
+
 </form>
-<script src="./js/add_agent_ticket.js"></script>
+
+<form action="/submit-url" method="post">
+    <h2>search</h2>
+    <p>can only search by one</p>
+    <label for="agent_id">agent</label>
+    <select name="agent-drop" id="agent-dop">
+        <option value="">employee name</option>
+        {{#each agents}}
+        <option value="{{this.agent_name}}">{{this.agent_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Submit">
+
+</form>

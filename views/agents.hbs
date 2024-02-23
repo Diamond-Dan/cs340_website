@@ -8,19 +8,20 @@
 
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-                 <th style="width:100px;">
+        <th>
+            agent id
+        </th>
+        <th>
+            name
+        </th>
+
+        <th>
             Edit
-            </th>
-               <th style="width:150px;">
-            Delete
-            </th>
-        </tr>
+        </th>
+
+        <th>
+            delete
+        </th>
     </thead>
 
     {{!-- Body section --}}
@@ -45,10 +46,36 @@
     
     <label for="input-agent_name">agent_name: </label>
     <input type="text" name="input-agent_name" id="input-agent_name">
-
-    
-
     
     <input type="submit">
 </form>
+
+<form action="/submit-url" method="post">
+    <h2>search</h2>
+    <p>can only search by one</p>
+    <label for="agent_id">agent</label>
+    <select name="agent-drop" id="agent-dop">
+        <option value="">employee name</option>
+        {{#each data}}
+        <option value="{{this.agent_name}}">{{this.agent_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+<form action="/submit-url" method="post">
+    <label for="agent_id">agent</label>
+    <select name="agent-drop" id="agent-dop">
+        <option value="">employee id</option>
+        {{#each data}}
+        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Submit">
+
+</form>
+
 <script src="./js/add_agent.js"></script>

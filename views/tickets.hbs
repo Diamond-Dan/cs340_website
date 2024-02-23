@@ -132,7 +132,9 @@
     <h2>search</h2>
     <p>can only search by a single input</p>
     <label for="department">Department: </label>
+    
     <select id="department" name="department">
+        <option value=""></option>
         {{#each department}}
         <option value="{{this.tag_id}}">{{this.tag_type}}</option>
         {{/each}}

@@ -26,11 +26,11 @@ app.use(express.static('public'))
 */
 app.get('/', function(req, res)                 // This is the basic syntax for what is called a 'route'
     {
-       let query1 ='SELECT * FROM Tickets;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('index', {data: rows});         // This function literally sends the string "The server is running!" to the computer
-        });
+      
+            res.render('index');         // This function literally sends the string "The server is running!" to the computer
+        
     });            
+
 
 app.get('/tickets', function(req, res)                 // This is the basic syntax for what is called a 'route'
 {
@@ -39,7 +39,21 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
     let query3 = "select * from Tags"
     let query4 = "select * from Agents"
     db.pool.query(query1, function(error, rows, fields){
-        let tickets = rows;
+        // change date row slicing it here
+        const change_rows = rows.map((row) => {
+               
+            const new_date_row = new Date(row.create_date).toDateString(); // Formats to "Weekday Month Day Year"
+            
+            return {
+                ...row,
+                create_date: new_date_row // Overwrite create_date with new_date_row 
+                
+            };
+        });
+
+        let tickets = change_rows;
+        
+
         db.pool.query(query2, (error, rows, fields) => {
             let users = rows;
             db.pool.query(query3, (error, rows, fields) => {
@@ -56,21 +70,43 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
 
 
 app.get('/ticket_chats', (req, res) => {
-    let query1 ='SELECT * FROM Ticket_Chats;';
+    
+    let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
+    let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
         db.pool.query(query1,function(error, rows, fields){
-            let tickets = rows
+            if (error) {// Added error checking for K 
+                // Send error
+                console.error('Can not get tickets from SQL server:', err);
+                res.status(500).send('Can not get tickets from SQL server');
+                return;
+            }
+             // change date row slicing it here
+             const change_rows = rows.map((row) => {
+                const new_date_row = new Date(row.chat_date).toDateString(); // Formats to "Weekday Month Day Year"
+                
+                return {
+                    ...row,
+                    chat_date: new_date_row // Overwrite chat_date with new_date_row 
+                };
+            });
+            let tickets = change_rows
             db.pool.query(query2, (error, rows, fields) => {
             let user = rows
             db.pool.query(query3, (error, rows, fields) => {
                 let agent = rows
-                console.log(agent)
-                return res.render("ticket_chats", {data: tickets, users: user, agents:agent})
+                db.pool.query(query4, (error, rows, fields) => {
+                    let tik = rows
+                    console.log(tik)
+                    return res.render("ticket_chats", {data: tickets, users: user, agents:agent, tick_id:tik})
+                })
             })    
            })
+          
         });
-    });
+    });;  
+
 
 app.get('/users', (req, res) => {
     let query2 ='SELECT * FROM Users;';
@@ -85,15 +121,20 @@ app.get('/tags', (req, res) => {
         });
     });
 app.get('/agents_has_tickets', (req, res) => {
-    let query2 ='SELECT * FROM Agents_has_Tickets;';
-        db.pool.query(query2,function(err, rows2, fields){
-            res.render('agents_has_tickets', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
+    let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
+    let query2 = 'select * from Agents;';
+        db.pool.query(query1,function(err, rows, fields){
+            let table = rows
+            db.pool.query(query2, (error, rows, fields) => {
+                let agent = rows
+                res.render('agents_has_tickets', {data: table, agents:agent});         // This function literally sends the string "The server is running!" to the computer
+            })
         });
     });
 app.get('/agents', (req, res) => {
-    let query2 ='SELECT * FROM Agents;';
-        db.pool.query(query2,function(err, rows2, fields){
-            res.render('agents', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
+    let query1 ='SELECT * FROM Agents;';
+        db.pool.query(query1,function(err, rows, fields){
+            res.render('agents', {data: rows});         // This function literally sends the string "The server is running!" to the computer
         });
     }); 
 
@@ -113,7 +154,7 @@ app.post('/add-ticket-ajax', function(req, res)
     let ticket_status = parseInt(data.ticket_status);
     if (isNaN(ticket_status))
     {
-        ticket_status = 5
+        ticket_status = 0
     }
 
    
@@ -158,4 +199,6 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
 
-
+/*
+Handlebars helpers
+*/
