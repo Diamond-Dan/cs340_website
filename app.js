@@ -43,11 +43,11 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
         const change_rows = rows.map((row) => {
                
             const new_date_row = new Date(row.create_date).toDateString(); // Formats to "Weekday Month Day Year"
-            
+            const status_to_words= row.ticket_status=== 0? 'Open' :'Closed'
             return {
                 ...row,
-                create_date: new_date_row // Overwrite create_date with new_date_row 
-                
+                create_date: new_date_row, // Overwrite create_date with new_date_row 
+                ticket_status: status_to_words
             };
         });
 
