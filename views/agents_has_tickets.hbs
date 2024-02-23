@@ -33,32 +33,3 @@
 <h2>You can not add an entry here</h2>
 <p>You cannot assign tickets to agents here, you must claim a ticket on the tickets page</p>
 
-<form action="/submit-url" method="post">
-    <h2>search</h2>
-    <p>can only search by one</p>
-    <label for="agent_id">agent</label>
-    <select name="agent-drop" id="agent-dop">
-        <option value="">please select employee id</option>
-        {{#each agents}}
-        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
-        {{/each}}
-    </select>
-
-    <input type="submit" value="Submit">
-
-</form>
-
-<form action="/submit-url" method="post">
-    <h2>search</h2>
-    <p>can only search by one</p>
-    <label for="agent_id">agent</label>
-    <select name="agent-drop" id="agent-dop">
-        <option value="">employee name</option>
-        {{#each agents}}
-        <option value="{{this.agent_name}}">{{this.agent_name}}</option>
-        {{/each}}
-    </select>
-
-    <input type="submit" value="Submit">
-
-</form>

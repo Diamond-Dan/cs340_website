@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 2564;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -122,6 +122,7 @@ app.get('/tags', (req, res) => {
     });
 app.get('/agents_has_tickets', (req, res) => {
     let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
+
     let query2 = 'select * from Agents;';
         db.pool.query(query1,function(err, rows, fields){
             let table = rows
@@ -129,6 +130,7 @@ app.get('/agents_has_tickets', (req, res) => {
                 let agent = rows
                 res.render('agents_has_tickets', {data: table, agents:agent});         // This function literally sends the string "The server is running!" to the computer
             })
+
         });
     });
 app.get('/agents', (req, res) => {
@@ -202,3 +204,4 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
 /*
 Handlebars helpers
 */
+
