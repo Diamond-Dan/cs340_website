@@ -72,7 +72,7 @@
     <label for="add-message-ticket-id">ticket id</label>
     <select name="add-message" id="add-message-ticket-id">
         <option value="">please select a ticket id</option>
-        {{#each data}}
+        {{#each tick_id}}
         <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
         {{/each}}
     </select>
@@ -99,6 +99,51 @@
 
     
     <input type="submit">
+</form>
+
+<form action="/submit-url" method="post">
+
+    <h2>Search</h2>
+    <p>can only search by one</p>
+    <label for="ticket id"> ticket id</label>
+    <select name="search-message" id="search-message-ticket-id">
+        <option value="">please select a ticket id</option>
+        {{#each tick_id}}
+        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="submit">
+    
+</form>
+
+<br>
+
+<form action="/submit-url" method="post">
+    <label for="user search">user:</label>
+    <select>
+        <option value="">please select user id</option>
+        {{#each users}}
+        <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_email}}</option>
+        {{/each}}
+    </select>
+
+<input type="submit" value="submit">
+
+</form>
+
+<br>
+
+<form action="/submit-url" method="post">
+    <label for="agent search">agnet:</label>
+    <select name="agent-id" id="messaged-agent-id">
+    <option value="">select employee id</option>
+    {{!-- {{#each agents}}
+    <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+    {{/each}} --}}
+    </select>
+
+    <input type="submit" value="submit">
+
 </form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}

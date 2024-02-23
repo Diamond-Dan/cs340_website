@@ -74,6 +74,7 @@ app.get('/ticket_chats', (req, res) => {
     let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
+    let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
         db.pool.query(query1,function(error, rows, fields){
             if (error) {// Added error checking for K 
                 // Send error
@@ -95,8 +96,11 @@ app.get('/ticket_chats', (req, res) => {
             let user = rows
             db.pool.query(query3, (error, rows, fields) => {
                 let agent = rows
-                console.log(agent)
-                return res.render("ticket_chats", {data: tickets, users: user, agents:agent})
+                db.pool.query(query4, (error, rows, fields) => {
+                    let tik = rows
+                    console.log(tik)
+                    return res.render("ticket_chats", {data: tickets, users: user, agents:agent, tick_id:tik})
+                })
             })    
            })
           
@@ -118,14 +122,21 @@ app.get('/tags', (req, res) => {
     });
 app.get('/agents_has_tickets', (req, res) => {
     let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
-        db.pool.query(query1,function(err, rows2, fields){
-            res.render('agents_has_tickets', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
+
+    let query2 = 'select * from Agents;';
+        db.pool.query(query1,function(err, rows, fields){
+            let table = rows
+            db.pool.query(query2, (error, rows, fields) => {
+                let agent = rows
+                res.render('agents_has_tickets', {data: table, agents:agent});         // This function literally sends the string "The server is running!" to the computer
+            })
+
         });
     });
 app.get('/agents', (req, res) => {
-    let query2 ='SELECT * FROM Agents;';
-        db.pool.query(query2,function(err, rows2, fields){
-            res.render('agents', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
+    let query1 ='SELECT * FROM Agents;';
+        db.pool.query(query1,function(err, rows, fields){
+            res.render('agents', {data: rows});         // This function literally sends the string "The server is running!" to the computer
         });
     }); 
 
