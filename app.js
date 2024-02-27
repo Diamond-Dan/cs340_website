@@ -43,11 +43,11 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
         const change_rows = rows.map((row) => {
                
             const new_date_row = new Date(row.create_date).toDateString(); // Formats to "Weekday Month Day Year"
-            
+            const status_to_words= row.ticket_status=== 0? 'Open' :'Closed'
             return {
                 ...row,
-                create_date: new_date_row // Overwrite create_date with new_date_row 
-                
+                create_date: new_date_row, // Overwrite create_date with new_date_row 
+                ticket_status: status_to_words
             };
         });
 
@@ -71,11 +71,15 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
 
 app.get('/ticket_chats', (req, res) => {
     
-    let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
+    let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
-    let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
-        db.pool.query(query1,function(error, rows, fields){
+    let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
+    
+    
+    db.pool.query(query1,function(error, rows, fields){
+            let tickets = rows
+            console.log(tickets)
             if (error) {// Added error checking for K 
                 // Send error
                 console.error('Can not get tickets from SQL server:', err);
@@ -91,14 +95,15 @@ app.get('/ticket_chats', (req, res) => {
                     chat_date: new_date_row // Overwrite chat_date with new_date_row 
                 };
             });
-            let tickets = change_rows
+            tickets = change_rows
+            
             db.pool.query(query2, (error, rows, fields) => {
             let user = rows
             db.pool.query(query3, (error, rows, fields) => {
                 let agent = rows
                 db.pool.query(query4, (error, rows, fields) => {
                     let tik = rows
-                    console.log(tik)
+                    // console.log(tik)
                     return res.render("ticket_chats", {data: tickets, users: user, agents:agent, tick_id:tik})
                 })
             })    
@@ -115,13 +120,13 @@ app.get('/users', (req, res) => {
         });
     });
 app.get('/tags', (req, res) => {
-    let query2 ='SELECT * FROM Tags;';
+    let query2 ='SELECT * FROM Tags ORDER BY tag_id;';
         db.pool.query(query2,function(err, rows2, fields){
             res.render('tags', {data: rows2});         // This function literally sends the string "The server is running!" to the computer
         });
     });
 app.get('/agents_has_tickets', (req, res) => {
-    let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
+    let query1 ='SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets LEFT JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id;';
 
     let query2 = 'select * from Agents;';
         db.pool.query(query1,function(err, rows, fields){

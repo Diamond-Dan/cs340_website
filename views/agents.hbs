@@ -41,10 +41,8 @@
 <h2>Add an entry</h2>
 <p>To add a new agent, please enter the agent information below and click 'Submit'!</p>
 <form id="add-agent-form-ajax">
-    <label for="input-agent_id">agent_id: </label>
-    <input type="number" name="input-agent_id" id="input-agent_id">
-    
-    <label for="input-agent_name">agent_name: </label>
+
+    <label for="input-agent_name">Agent Name: </label>
     <input type="text" name="input-agent_name" id="input-agent_name">
     
     <input type="submit">
@@ -52,8 +50,8 @@
 
 <form action="/submit-url" method="post">
     <h2>search</h2>
-    <p>can only search by one</p>
-    <label for="agent_id">agent</label>
+    <p>You can only use on option to search</p>
+    <label for="agent_id">Agent</label>
     <select name="agent-drop" id="agent-dop">
         <option value="">employee name</option>
         {{#each data}}
@@ -66,7 +64,7 @@
 </form>
 
 <form action="/submit-url" method="post">
-    <label for="agent_id">agent</label>
+    <label for="agent_id">Agent ID</label>
     <select name="agent-drop" id="agent-dop">
         <option value="">employee id</option>
         {{#each data}}
