@@ -84,7 +84,7 @@
     <select name="user-id" id="message-user-id">
         <option value="">please select userid</option>
         {{#each users}}
-        <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_email}}</option>
+        <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_name}} {{this.user_email}}</option>
         {{/each}}
     </select>
 
@@ -93,7 +93,7 @@
     <select name="agent-id" id="messaged-agent-id">
         <option value="">select your employee id</option>
         {{#each agents}}
-        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        <option value="{{this.agent_id}}">{{this.agent_id}} {{this.agent_name}}</option>
         {{/each}}
     </select>
 
