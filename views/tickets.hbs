@@ -52,7 +52,7 @@
 
         {{!-- For each row, print name --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.ticket_id}}">
             <td>{{this.ticket_id}}</td>
             <td>{{this.Users_user_id}}</td>
             <td>{{this.ticket_subject}}</td>
@@ -60,8 +60,8 @@
             <td>{{this.create_date}}</td>
             <td>{{this.ticket_status}}</td>
             <td>{{this.tag_name}}</td>
-            <td><button type="button">Edit Entry</button>
-            <td><button type="button">Delete Entry</button>
+            <td><button >Edit Entry</button>
+            <td><button  onclick="delete_ticket({{this.ticket_id}})">Delete Entry</button>
         </tr>
         {{/each}}
     </tbody>
@@ -158,3 +158,4 @@
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_ticket.js"></script>
 <script src="./js/claim_ticket.js"></script>
+<script src="./js/delete_ticket.js"></script>

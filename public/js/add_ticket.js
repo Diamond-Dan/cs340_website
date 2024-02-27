@@ -85,7 +85,8 @@ addRowToTable = (input) => {
     properties.forEach((prop) => {
         // Create a new cell
         let cell = document.createElement("TD");
- 
+        let deleteCell = document.createElement("TD");
+        let editCell= document.createElement("TD");
         // Set the cell's content to the corresponding property value of newRow
         if(prop=="create_date")
             {
@@ -100,14 +101,29 @@ addRowToTable = (input) => {
             }
         else{
             cell.innerHTML = newRow[prop]; // Use innerHTML or innerText depending on your content
+         
         }
         
- 
+      
         // Append the cell to the row
         row.appendChild(cell);
+       
     });
- 
-    // Append the row to the table
+    // editCell=document.createElement("button");
+    //     editCell.innerHTML="Edit";
+    //     // deleteCell.onclick=function(){
+    
+    //     // }
+    // deleteCell = document.createElement("button");
+    //     deleteCell.innerHTML = "Delete";
+    //     deleteCell.onclick = function(){
+    //         delete_row(newRow.id);
+    //     };
+    // // Append the row to the table
+    // row.appendChild(editCell);
+    // row.appendChild(deleteCell);
+    // row.setAttribute('data-value',newRow.id);
     currentTable.appendChild(row);
+    location.reload();
    
 };
