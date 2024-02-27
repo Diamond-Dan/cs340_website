@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 2564;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -79,7 +79,6 @@ app.get('/ticket_chats', (req, res) => {
     
     db.pool.query(query1,function(error, rows, fields){
             let tickets = rows
-            console.log(tickets)
             if (error) {// Added error checking for K 
                 // Send error
                 console.error('Can not get tickets from SQL server:', err);
@@ -198,6 +197,36 @@ app.post('/add-ticket-ajax', function(req, res)
         }
     })
 });
+
+app.post('/claim-ticket-ajax', function(req, res) {
+    let data = req.body;
+
+    // check for nulls
+    let agentId = parseInt(data.agent_id);
+    if (isNaN(agentId)) {
+        agentId = null;
+    }
+
+    let ticketId = parseInt(data.ticket_id);
+    if (isNaN(ticketId)) {
+        res.status(400).send({ message: 'Ticket ID is required.' });
+        return;
+    }
+
+    // insert into intersection table
+    let claimTicketQuery = `INSERT INTO Agents_has_Tickets (agent_id, ticket_id) VALUES (${agentId}, ${ticketId})`;
+    db.pool.query(claimTicketQuery, function(error, result) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.status(200).send({ message: 'Ticket claimed successfully.' });
+        }
+    });
+});
+
+
 
 /*
     LISTENER

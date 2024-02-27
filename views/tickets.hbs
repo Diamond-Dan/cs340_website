@@ -99,9 +99,9 @@
     <input type="submit">
 </form>
 
-<form>
 
-    <h2>Claim a ticket</h2>
+<h2>Claim a ticket</h2>
+<form id="add_agent_ticket_table">
 
     <label for="agent">
         Agent
@@ -128,9 +128,9 @@
 
 </form>
 
+<h2>search</h2>
+<p>can only search by a single input</p>
 <form action="/submit-url" method="post">
-    <h2>search</h2>
-    <p>can only search by a single input</p>
     <label for="department">Department: </label>
     
     <select id="department" name="department">
@@ -157,3 +157,4 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_ticket.js"></script>
+<script src="./js/claim_ticket.js"></script>
