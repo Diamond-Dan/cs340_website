@@ -74,7 +74,7 @@ app.get('/ticket_chats', (req, res) => {
     let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
-    // let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
+    //let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
     let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC'
     
     db.pool.query(query1,function(error, rows, fields){
@@ -143,6 +143,28 @@ app.get('/agents', (req, res) => {
             res.render('agents', {data: rows});         // This function literally sends the string "The server is running!" to the computer
         });
     }); 
+
+
+app.get('/edit_tickets', function(req, res)              
+{
+    let query1 = "select * from Tickets"
+    let query2 = "select * from Users"
+    let query3 = "select * from Tags"
+    let query4 = "select * from Agents"
+    db.pool.query(query1, (error, rows, fields) => {
+        let tickets = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            let users = rows;
+            db.pool.query(query3, (error, rows, fields) => {
+                let tags = rows
+                db.pool.query(query4, (error, rows, fields) => {
+                    let agent = rows
+        res.render('edit_tickets',{data: tickets, user_ids: users, department: tags, agents:agent});         
+                })
+            })
+        })
+    })
+}); 
 
 /*
 POST
@@ -267,6 +289,10 @@ db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields){
     }
 })});
 
+/*
+Edit
+*/
+   
 /*
 Handlebars helpers
 */

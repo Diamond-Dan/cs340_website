@@ -60,7 +60,7 @@
             <td>{{this.create_date}}</td>
             <td>{{this.ticket_status}}</td>
             <td>{{this.tag_name}}</td>
-            <td><button >Edit Entry</button>
+            <td><button onclick="edit_button({{this.ticket_id}},{{this.Users_user_id}},'{{this.ticket_subject}}','{{this.ticket_body}}','{{this.tag_name}}')" >Edit Entry</button>
             <td><button  onclick="delete_ticket({{this.ticket_id}})">Delete Entry</button>
         </tr>
         {{/each}}
@@ -155,7 +155,9 @@
 
 
 
+
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_ticket.js"></script>
 <script src="./js/claim_ticket.js"></script>
 <script src="./js/delete_ticket.js"></script>
+<script src="./js/edit_ticket.js"></script>
