@@ -290,9 +290,40 @@ db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields){
 })});
 
 /*
-Edit
+Edit(put)
 */
+app.put('/put-ticket-ajax',function(req,res,next)
+{
+    
+    let data =req.body;
+    let ticket_id=parseInt(data.id)
+    let Users_user_id=parseInt(data.user_id)
+    let ticket_subject=data.subject
+    let ticket_body=data.body
+    let ticket_status=parseInt(data.status)
+    let tag_name=data.tag
+    //console.log(req.body)
+    let query_update_ticket= `UPDATE Tickets SET Users_user_id=?,  ticket_subject=?, ticket_body=?, ticket_status=?, tag_name=? WHERE ticket_id=?`
    
+   
+    db.pool.query(query_update_ticket,[Users_user_id,ticket_subject,ticket_body,ticket_status,tag_name, ticket_id], function(error,rows,fields)
+    {
+        if (error){
+            console.log("error with query_update_ticket");
+            res.sendStatus(400);
+        }
+        else
+        {
+           
+           // console.log(rows)
+            
+            res.send(rows);
+            
+        }
+
+    }
+    )
+});
 /*
 Handlebars helpers
 */
