@@ -8,20 +8,21 @@ addTicketForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputuser_id = document.getElementById("input-user_id");
-    //console.log(inputuser_id)
+   
+    let inputuser_id_dropdown=document.getElementById("input-user_id");
+    
+    let inputticket_status=0
     let inputticket_subject = document.getElementById("input-ticket_subject");
     let inputticket_body = document.getElementById("input-ticket_body");
-    let inputticket_status = document.getElementById("input-ticket_status");
-    let inputtag_name = document.getElementById("input-tag_name");
-
+    let inputtag_name_dropdown = document.getElementById("input-tag_name");
+    
     // Get the values from the form fields
-    let user_idValue = inputuser_id.value;
+    let user_idValue = inputuser_id_dropdown.options[inputuser_id_dropdown.selectedIndex].value;
     //console.log(user_idValue)
     let ticket_subjectValue = inputticket_subject.value;
     let ticket_bodyValue = inputticket_body.value;
     let ticket_statusValue = inputticket_status.value;
-    let tag_nameValue = inputtag_name.value;
+    let tag_nameValue = inputtag_name_dropdown.options[inputtag_name_dropdown.selectedIndex].value;
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -45,14 +46,15 @@ addTicketForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
             
             // Clear the input fields for another transaction
-            inputuser_id.value = '';
+            inputuser_id_dropdown.value = '';
             inputticket_subject.value = '';
             inputticket_body.value = '';
             inputticket_status.value = '';
-            inputtag_name.value = '';
+            inputtag_name_dropdown.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
+            window.alert('Please fill out all fields.');
         }
     }
 
@@ -79,25 +81,49 @@ addRowToTable = (input) => {
     let properties = ['ticket_id', 'Users_user_id', 'ticket_subject', 'ticket_body', 'create_date', 'ticket_status', 'tag_name'];
  
     // Iterate over the properties
+   
     properties.forEach((prop) => {
         // Create a new cell
         let cell = document.createElement("TD");
- 
+        let deleteCell = document.createElement("TD");
+        let editCell= document.createElement("TD");
         // Set the cell's content to the corresponding property value of newRow
-        if(prop=="createdata")
+        if(prop=="create_date")
             {
-                const date=newRow[prop].slice(0,9)
+                const date=new Date(newRow[prop]).toDateString();
                 cell.innerHTML=date
+                
+            }
+        else if(prop=="ticket_status")
+            {
+            const translate_status= newRow[prop]===0? 'Open' :'Closed'
+            cell.innerHTML=translate_status
             }
         else{
             cell.innerHTML = newRow[prop]; // Use innerHTML or innerText depending on your content
+         
         }
         
- 
+      
         // Append the cell to the row
         row.appendChild(cell);
+       
     });
- 
-    // Append the row to the table
+    // editCell=document.createElement("button");
+    //     editCell.innerHTML="Edit";
+    //     // deleteCell.onclick=function(){
+    
+    //     // }
+    // deleteCell = document.createElement("button");
+    //     deleteCell.innerHTML = "Delete";
+    //     deleteCell.onclick = function(){
+    //         delete_row(newRow.id);
+    //     };
+    // // Append the row to the table
+    // row.appendChild(editCell);
+    // row.appendChild(deleteCell);
+    // row.setAttribute('data-value',newRow.id);
     currentTable.appendChild(row);
+    location.reload();
+   
 };

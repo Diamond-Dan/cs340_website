@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 2564;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -74,8 +74,8 @@ app.get('/ticket_chats', (req, res) => {
     let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
-    let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
-    
+    //let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
+    let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC'
     
     db.pool.query(query1,function(error, rows, fields){
             let tickets = rows
@@ -144,6 +144,28 @@ app.get('/agents', (req, res) => {
         });
     }); 
 
+
+app.get('/edit_tickets', function(req, res)              
+{
+    let query1 = "select * from Tickets"
+    let query2 = "select * from Users"
+    let query3 = "select * from Tags"
+    let query4 = "select * from Agents"
+    db.pool.query(query1, (error, rows, fields) => {
+        let tickets = rows;
+        db.pool.query(query2, (error, rows, fields) => {
+            let users = rows;
+            db.pool.query(query3, (error, rows, fields) => {
+                let tags = rows
+                db.pool.query(query4, (error, rows, fields) => {
+                    let agent = rows
+        res.render('edit_tickets',{data: tickets, user_ids: users, department: tags, agents:agent});         
+                })
+            })
+        })
+    })
+}); 
+
 /*
 POST
 
@@ -192,6 +214,7 @@ app.post('/add-ticket-ajax', function(req, res)
                 else
                 {
                     res.send(rows);
+                    
                 }
             })
         }
@@ -234,7 +257,73 @@ app.post('/claim-ticket-ajax', function(req, res) {
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
+/*
+    DELETE
+*/
+app.delete('/delete_ticket_ajax', function(req,res,next){
 
+
+let data =req.body;
+let ticket_id=parseInt(data.id);
+let delete_ticket_by_id= `DELETE FROM Tickets WHERE ticket_id=?`;
+db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields){
+    if (error) {
+
+    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+    console.log(error);
+    res.sendStatus(400);
+    }
+
+    else
+    {
+        // Run the second query
+        db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields) {
+
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                res.sendStatus(204);
+            }
+        })
+    }
+})});
+
+/*
+Edit(put)
+*/
+app.put('/put-ticket-ajax',function(req,res,next)
+{
+    
+    let data =req.body;
+    let ticket_id=parseInt(data.id)
+    let Users_user_id=parseInt(data.user_id)
+    let ticket_subject=data.subject
+    let ticket_body=data.body
+    let ticket_status=parseInt(data.status)
+    let tag_name=data.tag
+    //console.log(req.body)
+    let query_update_ticket= `UPDATE Tickets SET Users_user_id=?,  ticket_subject=?, ticket_body=?, ticket_status=?, tag_name=? WHERE ticket_id=?`
+   
+   
+    db.pool.query(query_update_ticket,[Users_user_id,ticket_subject,ticket_body,ticket_status,tag_name, ticket_id], function(error,rows,fields)
+    {
+        if (error){
+            console.log("error with query_update_ticket");
+            res.sendStatus(400);
+        }
+        else
+        {
+           
+           // console.log(rows)
+            
+            res.send(rows);
+            
+        }
+
+    }
+    )
+});
 /*
 Handlebars helpers
 */

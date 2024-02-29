@@ -52,7 +52,7 @@
 
         {{!-- For each row, print name --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.ticket_id}}">
             <td>{{this.ticket_id}}</td>
             <td>{{this.Users_user_id}}</td>
             <td>{{this.ticket_subject}}</td>
@@ -60,8 +60,8 @@
             <td>{{this.create_date}}</td>
             <td>{{this.ticket_status}}</td>
             <td>{{this.tag_name}}</td>
-            <td><button type="button">Edit Entry</button>
-            <td><button type="button">Delete Entry</button>
+            <td><button onclick="edit_button({{this.ticket_id}},{{this.Users_user_id}},'{{this.ticket_subject}}','{{this.ticket_body}}','{{this.ticket_status}}','{{this.tag_name}}')" >Edit Entry</button>
+            <td><button  onclick="delete_ticket({{this.ticket_id}})">Delete Entry</button>
         </tr>
         {{/each}}
     </tbody>
@@ -74,7 +74,7 @@
 <form id="add-ticket-form-ajax">
     
     <label for="input-user-id">user id: </label>
-    <select id="dropdown">
+    <select id="input-user_id">
         <option value="">select a user id</option>
         {{#each user_ids}}
         <option value="{{this.user_id}}">{{this.user_id}}</option>
@@ -89,10 +89,10 @@
     <input type="text" name="input-ticket_body" id="input-ticket_body">
 
     <label for="input-tag_name">department: </label>
-       <select id="dropdown">
+       <select id="input-tag_name">
         <option value="">select a department</option>
         {{#each department}}
-        <option value="{{this.tag_id}}">{{this.tag_type}}</option>
+        <option value="{{this.tag_type}}">{{this.tag_type}}</option>
         {{/each}}
     </select>
     
@@ -110,7 +110,7 @@
     <select name="agent-drop" id="agent-dop">
         <option value="">please select your employee id</option>
         {{#each agents}}
-        <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+        <option value="{{this.agent_id}}">{{this.agent_id}} {{this.agent_name}}</option>
         {{/each}}
     </select>
 
@@ -119,7 +119,7 @@
             please select the ticket you wish to claim
         </option>
         {{#each data}}
-        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        <option value="{{this.ticket_id}}">Id:{{this.ticket_id}} from UId:{{this.Users_user_id}}</option>
         {{/each}}
 
     </select>
@@ -155,6 +155,9 @@
 
 
 
+
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_ticket.js"></script>
 <script src="./js/claim_ticket.js"></script>
+<script src="./js/delete_ticket.js"></script>
+<script src="./js/edit_ticket.js"></script>

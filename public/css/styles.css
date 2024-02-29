@@ -39,6 +39,20 @@ table {
   border-collapse:collapse;
   margin-top: 50px;
 }
+#edit_ticket_form_ajax{
+font-size: xx-large;
+
+
+}
+#edit_ticket_form_ajax input{
+  font-size: x-large;
+}
+#edit_ticket_form_ajax option{
+  font-size: x-large;
+}
+#edit_ticket_form_ajax select{
+  font-size: x-large;
+}
 tr {
   border-bottom: 2px solid #607274;
   padding: 5px;

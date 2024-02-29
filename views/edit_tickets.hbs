@@ -1,0 +1,76 @@
+
+
+<h2>Edit a Ticket</h2>
+
+
+<p>This is where you can edit a ticket</p>
+<form id="edit_ticket_form_ajax">
+<label for="ticket-to-edit">Ticket you are currently editing:</label>
+<input type="text" name="ticket-to-edit" id="ticket_id_place" size="5" disabled="true" readonly> 
+        
+
+    
+    <label for="input-user-id">User id: </label>
+    <select id="input-user_id" disabled="true" >
+        <option id=user_id_place>select a user id</option>
+        {{#each user_ids}}
+        <option value="{{this.user_id}}">{{this.user_id}}</option>
+        {{/each}}
+    </select>
+
+    
+    <label for="input-ticket_subject">Ticket subject: </label>
+    <input type="text" name="input-ticket_subject" id="ticket_subject">
+
+    <label for="input-ticket_body">Ticket body: </label>
+    <input type="text" name="input-ticket_body" id="ticket_body">
+    
+    <label for="input-option">Status: </label>
+       <select id="input-option">
+        <option id="option"></option>
+        
+        <option value="Closed">Closed</option>
+        <option value="Open">Open</option>
+       
+    </select>
+
+
+
+    <label for="input-tag_name">Department: </label>
+       <select id="input-tag_name">
+        <option id="tag_name"></option>
+        {{#each department}}
+        <option value="{{this.tag_type}}">{{this.tag_type}}</option>
+        {{/each}}
+    </select>
+    
+    <input type="submit" value="Edit Entry">
+</form>
+
+
+<script src="./js/edit_ticket_db.js"></script>
+
+<script>
+    //get data
+    const data= sessionStorage.getItem('ticket');
+    const ticket_data= JSON.parse(data);
+    console.log(data)
+    const ticket_id_places_element=document.getElementById('ticket_id_place');
+    const user_id_place_element=document.getElementById('user_id_place');
+    const input_ticket_subject_element=document.getElementById('ticket_subject')
+    const input_ticket_body_element=document.getElementById('ticket_body')
+    const input_option_element=document.getElementById('input-option')
+    const input_ticket_tag_element=document.getElementById('input-tag_name')
+    //assign
+    ticket_id_places_element.value=ticket_data.id;
+    ticket_id_places_element.textContent=ticket_data.id;
+    user_id_place_element.textContent=ticket_data.user_id;
+    input_ticket_subject_element.value=ticket_data.subject;
+    input_ticket_body_element.value=ticket_data.body;
+    input_option_element.value=ticket_data.status;
+    input_ticket_tag_element.value=ticket_data.tag;
+    
+</script>
+
+
+
