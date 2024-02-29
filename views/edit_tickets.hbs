@@ -5,16 +5,9 @@
 
 <p>This is where you can edit a ticket</p>
 <form id="edit_ticket_form_ajax">
-<label for="ticket-to-edit">Ticket to Edit:</label>
-<select name="ticket-to-edit" id="edit-id">
-        <option id=ticket_id_place>
-            
-        </option>
-        {{#each data}}
-        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
-        {{/each}}
-
-    </select>
+<label for="ticket-to-edit">Ticket you are currentlying to editing:</label>
+<input type="text" name="ticket-to-edit" id="ticket_id_place" size="5" readonly> 
+        
 
     
     <label for="input-user-id">user id: </label>
@@ -69,7 +62,7 @@
     const input_option_element=document.getElementById('option')
     const input_ticket_tag_element=document.getElementById('tag_name')
     //assign
-    ticket_id_places_element.textContent=ticket_data.id;
+    ticket_id_places_element.value=ticket_data.id;
     user_id_place_element.textContent=ticket_data.user_id;
     input_ticket_subject_element.value=ticket_data.subject;
     input_ticket_body_element.value=ticket_data.body;
