@@ -9,7 +9,7 @@ updatePersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let ticket_id = document.getElementById("edit-id");
+    let ticket_id = document.getElementById("ticket_id_place");
     let user_id = document.getElementById("input-user_id");
     let ticket_subject = document.getElementById("ticket_subject");
     let ticket_body = document.getElementById("ticket_body");
