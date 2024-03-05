@@ -221,6 +221,41 @@ app.post('/add-ticket-ajax', function(req, res)
     })
 });
 
+app.post('/add-tags-ajax',function(req,res){
+    let data=req.body
+    // let tag_name = (data.tag_name);
+    // console.log(tag_name)
+   
+    let add_tag_query=`INSERT INTO Tags (tag_type) VALUES ('${data.tag_name}')`;
+    db.pool.query(add_tag_query, function(error, result) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } 
+        else {
+            get_new_row = `SELECT * FROM Tags ORDER BY Tag_id DESC LIMIT 1;`;
+            db.pool.query(get_new_row, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                    
+                }
+            })
+        }
+    });
+
+});
+
 app.post('/claim-ticket-ajax', function(req, res) {
     let data = req.body;
 
