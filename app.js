@@ -72,7 +72,7 @@ app.get('/tickets', function(req, res)                 // This is the basic synt
 app.get('/ticket_chats', (req, res) => {
     
     let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
-    let query2 = "select * from Users";
+    let query2 = "SELECT * FROM Users INNER JOIN Tickets ON Users.user_id = Tickets.Users_user_id";
     let query3 = "select * from Agents";
     //let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
     let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC'
