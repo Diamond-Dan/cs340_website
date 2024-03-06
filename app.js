@@ -94,7 +94,6 @@ app.get('/ticket_chats', (req, res) => {
     let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
     let query2 = "select * from Users";
     let query3 = "select * from Agents";
-    //let query4 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id group by ticket_id;';
     let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC'
     
     db.pool.query(query1,function(error, rows, fields){
@@ -135,15 +134,15 @@ app.get('/ticket_chats', (req, res) => {
 app.get('/users', (req, res) => {
     let name = req.query.name;
     let email = req.query.email;
-    let number = req.query['seach-number'];
+    let number = req.query['search-number'];
 
     let query = 'SELECT * FROM Users';
     if (name) {
-        query += " WHERE user_name LIKE '%" + name + "%'";
+        query += " WHERE user_name = '" + name + "'";
     } else if (email) {
-        query += " WHERE user_email LIKE '%" + email + "%'";
+        query += " WHERE user_email = '" + email + "'";
     } else if (number) {
-        query += " WHERE user_Phone_number LIKE '%" + number + "%'";
+        query += " WHERE user_Phone_number = '" + number + "'";
     }
 
     db.pool.query(query, function(err, rows, fields){
@@ -175,7 +174,7 @@ app.get('/agents_has_tickets', (req, res) => {
     }
 
     if(agentNameSearch){
-        query1 += (agentIDSearch ? ' AND' : ' WHERE') + ` Agents.agent_name LIKE '%${agentNameSearch}%'`;
+        query1 += (agentIDSearch ? ' AND' : ' WHERE') + ` Agents.agent_name = '${agentNameSearch}'`;
     }
 
     if(ticketIdSearch){
