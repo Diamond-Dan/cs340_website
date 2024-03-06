@@ -71,7 +71,7 @@
 
     <label for="add-message-ticket-id">ticket id</label>
     <select name="add-message" id="add-message-ticket-id">
-        <option value="">please select a ticket id</option>
+        <option value="">Ticket ID</option>
         {{#each tick_id}}
         <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
         {{/each}}
@@ -80,9 +80,9 @@
     <label for="input-chat_history">message</label>
     <input type="text" name="input-chat_history" id="input-chat_history">
 
-    <label for="input-Users_user_id">user id</label>
+    <label for="input-Users_user_id">user ID</label>
     <select name="user-id" id="message-user-id">
-        <option value="">please select userid</option>
+        <option value="">User ID</option>
         {{#each users}}
         <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_name}} {{this.user_email}}</option>
         {{/each}}
@@ -91,7 +91,7 @@
 
     <label for="input-agent_id">agent_id: </label>
     <select name="agent-id" id="messaged-agent-id">
-        <option value="">select your employee id</option>
+        <option value="">Agent ID</option>
         {{#each agents}}
         <option value="{{this.agent_id}}">{{this.agent_id}} {{this.agent_name}}</option>
         {{/each}}
@@ -104,7 +104,7 @@
 <form action="/submit-url" method="post">
 
     <h2>Search</h2>
-    <p>can only search by one</p>
+    <p>Can only search by one.</p>
     <label for="ticket id"> Ticket ID</label>
     <select name="search-message" id="search-message-ticket-id">
         <option value="">please select a ticket id</option>
