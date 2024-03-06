@@ -165,7 +165,12 @@ app.get('/edit_tickets', function(req, res)
         })
     })
 }); 
-
+app.get('/edit_user', function(req, res)              
+{
+    
+        res.render('edit_user');         
+                
+}); 
 /*
 POST
 
@@ -255,7 +260,40 @@ app.post('/add-tags-ajax',function(req,res){
     });
 
 });
+app.post('/add-users-ajax',function(req,res){
+    let data=req.body
+    // let tag_name = (data.tag_name);
+    // console.log(tag_name)
+   
+    let add_tag_query=`INSERT INTO Users (user_name,user_email,user_Phone_number) VALUES ('${data.user}','${data.email}',${data.phone})`;
+    db.pool.query(add_tag_query, function(error, result) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } 
+        else {
+            get_new_row = `SELECT * FROM Users ORDER BY user_id DESC LIMIT 1;`;
+            db.pool.query(get_new_row, function(error, rows, fields){
 
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                    
+                }
+            })
+        }
+    });
+
+});
 app.post('/claim-ticket-ajax', function(req, res) {
     let data = req.body;
 
@@ -359,6 +397,40 @@ app.put('/put-ticket-ajax',function(req,res,next)
     }
     )
 });
+
+app.put('/put-user-ajax',function(req,res,next)
+{
+    
+    let data =req.body;
+    let user_id=parseInt(data.user_id)
+    let name=data.name
+    let email=data.email
+    let phone=parseInt(data.phone)
+   
+    //console.log(req.body)
+    let query_update_ticket= `UPDATE Users SET user_name=?,  user_email=?, user_Phone_number=? WHERE user_id=?`
+   
+   
+    db.pool.query(query_update_ticket,[name,email,phone,user_id], function(error,rows,fields)
+    {
+        if (error){
+            console.log("error with query_update_ticket");
+            res.sendStatus(400);
+        }
+        else
+        {
+           
+           // console.log(rows)
+            
+            res.send(rows);
+            
+        }
+
+    }
+    )
+});
+
+
 /*
 Handlebars helpers
 */
