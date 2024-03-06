@@ -19,9 +19,7 @@
             Edit
         </th>
 
-        <th>
-            delete
-        </th>
+       
     </thead>
 
     {{!-- Body section --}}
@@ -33,7 +31,7 @@
             <td>{{this.agent_id}}</td>
             <td>{{this.agent_name}}</td>
             <td><button onclick="edit_agent({{this.agent_id}},'{{this.agent_name}}')">Edit Entry</button>
-            <td><button type="button">Delete Entry</button>
+            
         </tr>
         {{/each}}
     </tbody>
