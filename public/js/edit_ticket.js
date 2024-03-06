@@ -16,7 +16,7 @@ function edit_button(ticket_id, Users_user_id,ticket_subject,ticket_body,ticket_
     
 }
 
-function edit_button(user_id,user_name,user_email,user_Phone_number){
+function edit_user(user_id,user_name,user_email,user_Phone_number){
     
    
     const user_data ={
@@ -30,5 +30,21 @@ function edit_button(user_id,user_name,user_email,user_Phone_number){
     
     sessionStorage.setItem('user',JSON.stringify(user_data));
     window.location.href ='/edit_user';
+    
+}
+
+function edit_agent(agent_id,agent_name){
+    
+   
+    const user_data ={
+        agent_id:agent_id,
+        name:agent_name,
+      
+       
+
+    }
+    
+    sessionStorage.setItem('agent',JSON.stringify(user_data));
+    window.location.href ='/edit_agent';
     
 }

@@ -19,9 +19,7 @@
             Edit
         </th>
 
-        <th>
-            delete
-        </th>
+       
     </thead>
 
     {{!-- Body section --}}
@@ -32,8 +30,8 @@
         <tr>
             <td>{{this.agent_id}}</td>
             <td>{{this.agent_name}}</td>
-            <td><button type="button">Edit Entry</button>
-            <td><button type="button">Delete Entry</button>
+            <td><button onclick="edit_agent({{this.agent_id}},'{{this.agent_name}}')">Edit Entry</button>
+            
         </tr>
         {{/each}}
     </tbody>
@@ -77,3 +75,4 @@
 </form>
 
 <script src="./js/add_agent.js"></script>
+<script src="./js/edit_ticket.js"></script>
