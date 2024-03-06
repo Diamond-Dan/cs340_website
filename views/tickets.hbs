@@ -73,7 +73,7 @@
 <p>To add a new ticket, please enter the ticket information below and click 'Submit'!</p>
 <form id="add-ticket-form-ajax">
     
-    <label for="input-user-id">user id: </label>
+    <label for="input-user-id">User ID: </label>
     <select id="input-user_id">
         <option value="">select a user id</option>
         {{#each user_ids}}
@@ -82,13 +82,13 @@
     </select>
 
     
-    <label for="input-ticket_subject">ticket_subject: </label>
+    <label for="input-ticket_subject">Ticket Subject: </label>
     <input type="text" name="input-ticket_subject" id="input-ticket_subject">
 
-    <label for="input-ticket_body">ticket_body: </label>
+    <label for="input-ticket_body">Ticket Body: </label>
     <input type="text" name="input-ticket_body" id="input-ticket_body">
 
-    <label for="input-tag_name">department: </label>
+    <label for="input-tag_name">Department: </label>
        <select id="input-tag_name">
         <option value="">select a department</option>
         {{#each department}}
@@ -108,18 +108,19 @@
     </label>
     
     <select name="agent-drop" id="agent-dop">
-        <option value="">please select your employee id</option>
-        {{#each agents}}
+        <option value="">Agent ID</option>
+        {{#each agent}}
         <option value="{{this.agent_id}}">{{this.agent_id}} {{this.agent_name}}</option>
         {{/each}}
     </select>
 
+    <label for="ticket-search">Ticket</label>
     <select name="ticket-to-claim" id="claim-id">
         <option>
-            please select the ticket you wish to claim
+            Ticket ID
         </option>
         {{#each data}}
-        <option value="{{this.ticket_id}}">Id:{{this.ticket_id}} from UId:{{this.Users_user_id}}</option>
+        <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
         {{/each}}
 
     </select>
@@ -128,12 +129,12 @@
 
 </form>
 
-<h2>search</h2>
-<p>can only search by a single input</p>
-<form action="/submit-url" method="post">
+<h2>Search</h2>
+<p>Can only search by a single input.</p>
+<form action="/tickets" method="get" action="/">
     <label for="department">Department: </label>
     
-    <select id="department" name="department">
+    <select id="tag_id" name="tag_id">
         <option value=""></option>
         {{#each department}}
         <option value="{{this.tag_id}}">{{this.tag_type}}</option>
@@ -144,14 +145,17 @@
 
 <br>
 
-<form action="/submit-url" method="post">
-    <label for="status">Status</label>
-    <select name="status" id="status">
-        <option value="0">0</option>
-        <option value="1">1</option>
+<form action="/tickets" method="get">
+    <label for="ticket_status">Status</label>
+    <select name="ticket_status" id="ticket_status">
+        <option value="0">Open</option>
+        <option value="1">Closed</option>
     </select>
     <input type="submit" value="Submit">
 </form>
+
+<a href="/tickets" id="reset-button">Reset</a>
+
 
 
 

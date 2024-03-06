@@ -57,21 +57,30 @@
     <input type="submit">
 </form>
 
-<form action="/submit-url" method="post">
+<form action="/users" method="get">
     <h2>search</h2>
     <p>can only search by one</p>
     <label for="name">Name</label>
-    <input type="text">
+    <input type="text" id="name" name="name">
     <input type="submit" value="Submit">
 
 </form>
 
-<form action="/submit-url" method="post">
+<form action="/users" method="get">
     <label for="email">Email</label>
-    <input type="text">
+    <input type="text" id="email" name="email">
     <input type="submit" value="Submit">
 
 </form>
+
+<form action="/users" method="get">
+    <label for="search-number">Number</label>
+    <input type="text" id="phonenumber" name="search-number">
+    <input type="submit" value="Submit">
+</form>
+
+<a href="/users" id="reset-button">Reset</a>
+
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_user.js"></script>

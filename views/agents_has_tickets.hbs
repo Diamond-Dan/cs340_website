@@ -33,3 +33,45 @@
 <h2>You can not add an entry here</h2>
 <p>You cannot assign tickets to agents here, you must claim a ticket on the tickets page</p>
 
+<h2>
+    Search
+</h2>
+
+<p>
+    Can only Search by One.
+</p>
+
+<form action="/agents_has_tickets" method="get">
+
+    <label for="AgentID">Agent ID</label>
+        <select name="agentIDSearch" id="agentIDSearch">
+            <option value="">Select agent ID</option>
+            {{#each agents}}
+                <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+            {{/each}}
+        </select>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+<form action="/agents_has_tickets" method="get">
+    <label for="AgentName">Agent Name</label>
+    <input type="text" name="agentNameSearch" id="agentNameSearch">
+    <input type="submit" value="Submit">
+</form>
+
+<form action="/agents_has_tickets" method="get">
+    <label for="ticketIdSearch">Ticket ID</label>
+    <select name="ticketIdSearch" id="ticketIdSearch">
+        <option value="">Select ticked ID</option>
+        {{#each tickets}}
+            <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+<a href="/agents_has_tickets" id="reset-button">Reset</a>
+
+

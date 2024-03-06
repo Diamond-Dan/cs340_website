@@ -1,6 +1,7 @@
 body{
   background-color: #E3E1D9;
   font-size:large;
+  text-align: center;
 }
 nav {
   text-align: center;
@@ -85,7 +86,13 @@ td {
   text-align: center;
 }
 
- 
+#reset-button {
+  background: red;
+  display: inline-block;
+  width: 18vw;
+  overflow: hidden;
+  margin-top: 20px !important;
+}
 
 
  
