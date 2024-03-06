@@ -1,0 +1,39 @@
+
+
+<h2>Edit a User</h2>
+
+
+<p>This is where you can edit an agent name</p>
+<form id="edit-agent-form-ajax">
+
+<input type="text" name="agent-to-edit" id="agent_id_place" size="5" disabled="true" readonly> 
+
+<label for="input-agent_name">Agent Name: </label>
+    <input type="text" name="input-agent_name" id="input-agent_name">
+    
+    <input type="submit">
+</form>
+
+    
+    
+</form>
+
+
+<script src="./js/edit_agent_db.js"></script>
+
+<script>
+    //get data
+    const data= sessionStorage.getItem('agent');
+    const user_data= JSON.parse(data);
+    const input_agent_id_element=document.getElementById('agent_id_place')
+    const input_agent_name_element=document.getElementById('input-agent_name')
+    
+    //assign
+    input_agent_id_element.value=user_data.agent_id;
+    input_agent_name_element.value=user_data.name;
+    
+    
+</script>
+
+
+

@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 2564;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -231,6 +231,12 @@ app.get('/edit_user', function(req, res)
         res.render('edit_user');         
                 
 }); 
+app.get('/edit_agent', function(req, res)              
+{
+    
+        res.render('edit_agent');         
+                
+}); 
 /*
 POST
 
@@ -389,6 +395,39 @@ app.post('/add-chat-ajax',function(req,res){
     });
 
 });
+app.post('/add-agent-ajax',function(req,res){
+    let data=req.body
+ 
+   
+    let add_tag_query=`INSERT INTO Agents (agent_name) VALUES ('${data.agent_name}')`;
+    db.pool.query(add_tag_query, function(error, result) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } 
+        else {
+            get_new_row = `SELECT * FROM Agents ORDER BY agent_id DESC LIMIT 1;`;
+            db.pool.query(get_new_row, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                    
+                }
+            })
+        }
+    });
+
+});
 
 app.post('/claim-ticket-ajax', function(req, res) {
     let data = req.body;
@@ -525,7 +564,36 @@ app.put('/put-user-ajax',function(req,res,next)
     }
     )
 });
+app.put('/put-agent-ajax',function(req,res,next)
+{
+    
+    let data =req.body;
+    let agent_id=parseInt(data.id)
+    let name=data.name
+    
+   
+    //console.log(req.body)
+    let query_update_ticket= `UPDATE Agents SET agent_name=? WHERE agent_id=?`
+   
+   
+    db.pool.query(query_update_ticket,[name,agent_id], function(error,rows,fields)
+    {
+        if (error){
+            console.log("error with query_update_ticket");
+            res.sendStatus(400);
+        }
+        else
+        {
+           
+           // console.log(rows)
+            
+            res.send(rows);
+            
+        }
 
+    }
+    )
+});
 
 /*
 Handlebars helpers
