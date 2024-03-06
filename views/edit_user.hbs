@@ -1,0 +1,49 @@
+
+
+<h2>Edit a User</h2>
+
+
+<p>This is where you can edit a user</p>
+<form id="edit-user-form-ajax">
+<label for="user-to-edit">User ID:</label>
+<input type="text" name="user-to-edit" id="user_id_place" size="5" disabled="true" readonly> 
+
+ <label for="input-user_name">User Name: </label>
+    <input type="text" name="input-user_name" id="input-user_name">
+    
+    <label for="input-user_email">User Email: </label>
+    <input type="text" name="input-user_email" id="input-user_email">
+
+    <label for="input-user_Phone_number">User Phone number: </label>
+    <input type="text" name="input-user_Phone_number" id="input-user_Phone_number" pattern="[0-9]+" maxlength="15" minlength="10">
+
+
+    
+    <input type="submit">      
+
+    
+    
+</form>
+
+
+<script src="./js/edit_user_db.js"></script>
+
+<script>
+    //get data
+    const data= sessionStorage.getItem('user');
+    const user_data= JSON.parse(data);
+    console.log(data)
+    const user_id_places_element=document.getElementById('user_id_place');
+    const input_user_name_element=document.getElementById('input-user_name')
+    const input_user_email=document.getElementById('input-user_email')
+    const input_user_Phone_number=document.getElementById('input-user_Phone_number')
+    //assign
+    user_id_places_element.value=user_data.user_id;
+    input_user_name_element.value=user_data.name;
+    input_user_email.value=user_data.email;
+    input_user_Phone_number.value=user_data.phone;
+    
+</script>
+
+
+
