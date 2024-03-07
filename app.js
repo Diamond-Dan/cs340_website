@@ -189,12 +189,12 @@ app.get('/agents_has_tickets', (req, res) => {
         query1 += ` WHERE Agents_has_Tickets.agent_id = ${agentIDSearch}`;
     }
 
-    if(agentNameSearch){
-        query1 += (agentIDSearch ? ' AND' : ' WHERE') + ` Agents.agent_name = '${agentNameSearch}'`;
+    else if(agentNameSearch){
+        query1 += ('WHERE') + ` Agents.agent_name = '${agentNameSearch}'`;
     }
 
-    if(ticketIdSearch){
-        query1 += ((agentIDSearch || agentNameSearch) ? ' AND' : ' WHERE') + ` Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
+    else if(ticketIdSearch){
+        query1 += (' WHERE') + ` Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
     }
 
     let query2 = 'SELECT * FROM Agents';
