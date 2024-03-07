@@ -526,6 +526,7 @@ db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields){
         })
     }
 })});
+
 app.delete('/delete_claimed_ajax', function(req,res,next){
 
 
@@ -555,6 +556,35 @@ app.delete('/delete_claimed_ajax', function(req,res,next){
             })
         }
     })});
+
+    app.delete('/delete_user_ajax', function(req,res,next){
+
+
+        let data =req.body;
+        let user_id=parseInt(data.id);
+        let delete_ticket_by_id= `DELETE FROM Users WHERE user_id=?`;
+        db.pool.query(delete_ticket_by_id, [user_id], function(error, rows, fields){
+            if (error) {
+        
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+        
+            else
+            {
+                // Run the second query
+                db.pool.query(delete_ticket_by_id, [user_id], function(error, rows, fields) {
+        
+                    if (error) {
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+                        res.sendStatus(204);
+                    }
+                })
+            }
+        })});
 /*
 Edit(put)
 */
