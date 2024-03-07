@@ -395,8 +395,13 @@ app.post('/add-chat-ajax',function(req,res){
     let data=req.body
     // let tag_name = (data.tag_name);
     // console.log(tag_name)
-   
-    let add_tag_query=`INSERT INTO Ticket_Chats (ticket_id,chat_history,Users_user_id, agent_id) VALUES (${data.ticket_id},'${data.chat}',${data.user_id},${data.agent_id})`;
+    let agent_id=data.agent_id
+    if(agent_id==="")
+    {
+        agent_id= null
+    }
+
+    let add_tag_query=`INSERT INTO Ticket_Chats (ticket_id,chat_history,Users_user_id, agent_id) VALUES (${data.ticket_id},'${data.chat}',${data.user_id},${agent_id})`;
     db.pool.query(add_tag_query, function(error, result) {
         // Check to see if there was an error
         if (error) {
