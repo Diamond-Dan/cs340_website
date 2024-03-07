@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 4000;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -90,12 +90,23 @@ app.get('/tickets', function(req, res) {
 
 
 app.get('/ticket_chats', (req, res) => {
-    
-    let query1 ='SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats   LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id  INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id;';
-    let query2 = "SELECT * FROM Users INNER JOIN Tickets ON Users.user_id = Tickets.Users_user_id";
+    let ticketId = req.query['id-search'] || '';
+    let userId = req.query['user-id'] || '';
+    let agentId = req.query['agent-id'] || '';
+
+    let query1 = 'SELECT chat_id, ticket_id, chat_history, chat_date, chat_time, Ticket_Chats.Users_user_id, Users.user_name, Ticket_Chats.agent_id, Agents.agent_name FROM Ticket_Chats LEFT JOIN Agents ON Ticket_Chats.agent_id=Agents.agent_id INNER JOIN Users ON Ticket_Chats.Users_user_id=Users.user_id';
+    if (ticketId) {
+        query1 += ` WHERE ticket_id = '${ticketId}'`;
+    } else if (userId) {
+        query1 += ` WHERE Users.user_id = '${userId}'`;
+    } else if (agentId) {
+        query1 += ` WHERE Agents.agent_id = '${agentId}'`;
+    }
+    let query2 = "SELECT * FROM Users INNER JOIN Tickets ON Users.user_id = Tickets.Users_user_id group by Tickets.Users_user_id";
     let query3 = "select * from Agents";
-    let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC'
-    
+    let query4= 'SELECT ticket_id FROM Tickets ORDER BY ticket_id ASC;';
+    let query5 = "select ticket_id From Ticket_Chats group by ticket_id;";
+    let query6 = "Select * from Users inner join Ticket_Chats where Users.user_id = Ticket_Chats.Users_user_id group by Ticket_Chats.Users_user_id;"
     db.pool.query(query1,function(error, rows, fields){
             let tickets = rows
             if (error) {// Added error checking for K 
@@ -121,8 +132,13 @@ app.get('/ticket_chats', (req, res) => {
                 let agent = rows
                 db.pool.query(query4, (error, rows, fields) => {
                     let tik = rows
-                    // console.log(tik)
-                    return res.render("ticket_chats", {data: tickets, users: user, agents:agent, tick_id:tik})
+                    db.pool.query(query5, (error, rows, fields) => {
+                        let tick = rows
+                        db.pool.query(query6, (error, rows, fields) => {
+                            let userSearch = rows
+                            return res.render("ticket_chats", {data: tickets, users: user, agents:agent, tick_id:tik, ticket_id:tick, user_search_ids:userSearch})
+                        })
+                    })
                 })
             })    
            })
@@ -173,12 +189,12 @@ app.get('/agents_has_tickets', (req, res) => {
         query1 += ` WHERE Agents_has_Tickets.agent_id = ${agentIDSearch}`;
     }
 
-    if(agentNameSearch){
-        query1 += (agentIDSearch ? ' AND' : ' WHERE') + ` Agents.agent_name = '${agentNameSearch}'`;
+    else if(agentNameSearch){
+        query1 +=  ` WHERE Agents.agent_name = '${agentNameSearch}'`;
     }
 
-    if(ticketIdSearch){
-        query1 += ((agentIDSearch || agentNameSearch) ? ' AND' : ' WHERE') + ` Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
+    else if(ticketIdSearch){
+        query1 += ` WHERE Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
     }
 
     let query2 = 'SELECT * FROM Agents';
@@ -199,9 +215,23 @@ app.get('/agents_has_tickets', (req, res) => {
 
 app.get('/agents', (req, res) => {
     let query1 ='SELECT * FROM Agents;';
-        db.pool.query(query1,function(err, rows, fields){
-            res.render('agents', {data: rows});         // This function literally sends the string "The server is running!" to the computer
+    let id = req.query.agentDropId;
+    let name = req.query.agentDropName;
+    if (id) {
+        query1 = `SELECT * FROM Agents WHERE agent_id = ${id}`;
+    }
+    else if (name) {
+        query1 = `SELECT * FROM Agents WHERE agent_name = '${name}'`;
+    }
+    let query2 ='SELECT * FROM Agents ORDER BY agent_id;';
+    db.pool.query(query1,function(err, rows, fields){
+        let table_data = rows
+        db.pool.query(query2, (error, rows, fields) => {
+            let agent = rows
+            res.render('agents', {data: table_data, agents:agent});
         });
+        
+    });
     }); 
 
 
