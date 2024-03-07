@@ -190,11 +190,11 @@ app.get('/agents_has_tickets', (req, res) => {
     }
 
     else if(agentNameSearch){
-        query1 += ('WHERE') + ` Agents.agent_name = '${agentNameSearch}'`;
+        query1 +=  ` WHERE Agents.agent_name = '${agentNameSearch}'`;
     }
 
     else if(ticketIdSearch){
-        query1 += (' WHERE') + ` Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
+        query1 += ` WHERE Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
     }
 
     let query2 = 'SELECT * FROM Agents';
