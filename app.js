@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 4000;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8864;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -526,7 +526,35 @@ db.pool.query(delete_ticket_by_id, [ticket_id], function(error, rows, fields){
         })
     }
 })});
+app.delete('/delete_claimed_ajax', function(req,res,next){
 
+
+    let data =req.body;
+    let user_id=parseInt(data.id);
+    let ticket_id=parseInt(data.ticket)
+    let delete_ticket_by_id= `DELETE FROM Agents_has_Tickets WHERE agent_id=? and ticket_id=?`;
+    db.pool.query(delete_ticket_by_id, [user_id, ticket_id], function(error, rows, fields){
+        if (error) {
+    
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.sendStatus(400);
+        }
+    
+        else
+        {
+            // Run the second query
+            db.pool.query(delete_ticket_by_id, [user_id,ticket_id], function(error, rows, fields) {
+    
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })});
 /*
 Edit(put)
 */
