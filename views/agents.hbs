@@ -46,13 +46,13 @@
     <input type="submit">
 </form>
 
-<form action="/submit-url" method="post">
+<form action="/agents" method="get">
     <h2>search</h2>
     <p>You can only use on option to search</p>
-    <label for="agent_id">Agent</label>
-    <select name="agent-drop" id="agent-dop">
+    <label for="agent_name">Agent</label>
+    <select name="agentDropName" id="agent-dop-name">
         <option value="">employee name</option>
-        {{#each data}}
+        {{#each agents}}
         <option value="{{this.agent_name}}">{{this.agent_name}}</option>
         {{/each}}
     </select>
@@ -61,11 +61,11 @@
 
 </form>
 
-<form action="/submit-url" method="post">
+<form action="/agents" method="get">
     <label for="agent_id">Agent ID</label>
-    <select name="agent-drop" id="agent-dop">
+    <select name="agentDropId" id="agent-dop-id">
         <option value="">employee id</option>
-        {{#each data}}
+        {{#each agents}}
         <option value="{{this.agent_id}}">{{this.agent_id}}</option>
         {{/each}}
     </select>
@@ -73,6 +73,9 @@
     <input type="submit" value="Submit">
 
 </form>
+
+<a href="/agents" id="reset-button">Reset</a>
+
 
 <script src="./js/add_agent.js"></script>
 <script src="./js/edit_ticket.js"></script>
