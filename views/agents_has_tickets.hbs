@@ -12,6 +12,10 @@
            <th>Agent ID</th>
            <th>Agent Name</th>
            <th>Ticket Claimed</th>
+           </th>
+            <th style="width:150px;">
+        Delete
+        </th>
         </tr>
     </thead>
 
@@ -20,10 +24,11 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.agent_id}}" ticket-value="{{this.ticket_id}}">
             <td>{{this.agent_id}}</td>
             <td>{{this.agent_name}}</td>
             <td>{{this.ticket_id}}</td>
+            <td><button  onclick="delete_claimed_ticket({{this.agent_id}},{{this.ticket_id}})">Unclaim Ticket</button>
            
         </tr>
         {{/each}}
@@ -73,5 +78,5 @@
 </form>
 
 <a href="/agents_has_tickets" id="reset-button">Reset</a>
-
+<script src="./js/delete_ticket.js"></script>
 

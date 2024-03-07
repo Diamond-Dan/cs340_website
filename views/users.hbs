@@ -40,14 +40,14 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.user_id}}">
             <td>{{this.user_id}}</td>
             <td>{{this.user_name}}</td>
             <td>{{this.user_email}}</td>
             <td>{{this.user_Phone_number}}</td>
             <td><button onclick="edit_user({{this.user_id}},'{{this.user_name}}','{{this.user_email}}','{{this.user_Phone_number}}')" >Edit Entry</button>
             
-            <td><button type="button">Delete Entry</button>
+            <td><button onclick="delete_user({{this.user_id}})">Delete Entry</button>
         </tr>
         {{/each}}
     </tbody>
@@ -97,3 +97,4 @@
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_user.js"></script>
 <script src="./js/edit_ticket.js"></script>
+<script src="./js/delete_ticket.js"></script>
