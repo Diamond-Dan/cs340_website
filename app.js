@@ -285,12 +285,11 @@ app.post('/add-ticket-ajax', function(req, res)
     {
         ticket_status = 0
     }
+    
 
-   
-    // Create the query and run it on the database
-    add_row_to_table = `INSERT INTO Tickets (Users_user_id, ticket_subject, ticket_body, ticket_status,tag_name) 
-    VALUES (${data.Users_user_id}, '${data.ticket_subject}', '${data.ticket_body}', ${ticket_status},'${data.tag_name}')`;
-    db.pool.query(add_row_to_table, function(error, rows, fields){
+    let add_row_to_table = `INSERT INTO Tickets (Users_user_id, ticket_subject, ticket_body, ticket_status,tag_name) 
+    VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(add_row_to_table, [data.Users_user_id, data.ticket_subject, data.ticket_body, ticket_status, data.tag_name], function(error, rows, fields){
         // Check to see if there was an error
         if (error) {
             //console.log(data)
@@ -401,8 +400,9 @@ app.post('/add-chat-ajax',function(req,res){
         agent_id= null
     }
 
-    let add_tag_query=`INSERT INTO Ticket_Chats (ticket_id,chat_history,Users_user_id, agent_id) VALUES (${data.ticket_id},'${data.chat}',${data.user_id},${agent_id})`;
-    db.pool.query(add_tag_query, function(error, result) {
+    let add_tag_query=`INSERT INTO Ticket_Chats (ticket_id,chat_history,Users_user_id, agent_id) 
+    VALUES(?,?,?,?)` ;
+    db.pool.query(add_tag_query,[data.ticket_id, data.chat, data.user_id, agent_id], function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);

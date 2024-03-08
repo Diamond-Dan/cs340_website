@@ -45,7 +45,7 @@ addTicketForm.addEventListener("submit", function (e) {
             
             // Clear the input fields for another transaction
             ticket_id.value = '';
-             chat_history.value = '';
+             chat_history.value = ``;
              user_id.value = '';
              agent_id.value = '';
             
