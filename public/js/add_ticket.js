@@ -23,7 +23,8 @@ addTicketForm.addEventListener("submit", function (e) {
     let ticket_bodyValue = inputticket_body.value;
     let ticket_statusValue = inputticket_status.value;
     let tag_nameValue = inputtag_name_dropdown.options[inputtag_name_dropdown.selectedIndex].value;
-
+    
+    
     // Put our data we want to send in a javascript object
     let data = {
         Users_user_id: user_idValue,

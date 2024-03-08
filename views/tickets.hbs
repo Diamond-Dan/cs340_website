@@ -74,23 +74,23 @@
 <form id="add-ticket-form-ajax">
     
     <label for="input-user-id">User ID: </label>
-    <select id="input-user_id">
-        <option value="">select a user id</option>
+    <select id="input-user_id" required>
+        <option value="">Select a user</option>
         {{#each user_ids}}
-        <option value="{{this.user_id}}">{{this.user_id}}</option>
+        <option value="{{this.user_id}}">{{this.user_id}}, {{this.user_name}} {{this.user_email}}</option>
         {{/each}}
     </select>
 
     
     <label for="input-ticket_subject">Ticket Subject: </label>
-    <input type="text" name="input-ticket_subject" id="input-ticket_subject">
+    <input type="text" name="input-ticket_subject" id="input-ticket_subject" required>
 
     <label for="input-ticket_body">Ticket Body: </label>
-    <input type="text" name="input-ticket_body" id="input-ticket_body">
+    <input type="text" name="input-ticket_body" id="input-ticket_body" required>
 
     <label for="input-tag_name">Department: </label>
-       <select id="input-tag_name">
-        <option value="">select a department</option>
+       <select id="input-tag_name" required >
+        <option value="">Select a department</option>
         {{#each department}}
         <option value="{{this.tag_type}}">{{this.tag_type}}</option>
         {{/each}}
