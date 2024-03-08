@@ -402,7 +402,7 @@ app.post('/add-chat-ajax',function(req,res){
 
     let add_tag_query=`INSERT INTO Ticket_Chats (ticket_id,chat_history,Users_user_id, agent_id) 
     VALUES(?,?,?,?)` ;
-    db.pool.query(add_tag_query,[data.ticket_id, data.chat, data.user_id, data.agent_id], function(error, result) {
+    db.pool.query(add_tag_query,[data.ticket_id, data.chat, data.user_id, agent_id], function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);
