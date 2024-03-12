@@ -23,7 +23,7 @@ function edit_user(user_id,user_name,user_email,user_Phone_number){
         user_id:user_id,
         name:user_name,
         email:user_email,
-        phone:user_Phone_number,
+        phone:user_Phone_number
        
 
     }
@@ -36,15 +36,31 @@ function edit_user(user_id,user_name,user_email,user_Phone_number){
 function edit_agent(agent_id,agent_name){
     
    
-    const user_data ={
+    const agent_data ={
         agent_id:agent_id,
-        name:agent_name,
+        name:agent_name
       
        
 
     }
     
-    sessionStorage.setItem('agent',JSON.stringify(user_data));
+    sessionStorage.setItem('agent',JSON.stringify(agent_data));
     window.location.href ='/edit_agent';
+    
+}
+
+function edit_claimed_ticket(agent_id,ticket_id){
+    
+   
+    const edit_claimed_data ={
+        agent_id:agent_id,
+        ticket_id:ticket_id
+      
+       
+
+    }
+    
+    sessionStorage.setItem('claimed_ticket',JSON.stringify(edit_claimed_data));
+    window.location.href ='/edit_agent_has_tickets';
     
 }

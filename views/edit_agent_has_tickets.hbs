@@ -1,0 +1,45 @@
+
+
+<h2>Edit a claimed ticket</h2>
+
+
+<p>This is where you can edit an which agent has claimed which ticket</p>
+<form id="edit_agents_has_tickets" >
+
+    <label for="AgentID">Agent ID</label>
+        <select name="agentIDSearch" id="agentIDSearch">
+            <option value="">Select agent ID</option>
+            {{#each agents}}
+                <option value="{{this.agent_id}}">{{this.agent_id}}</option>
+            {{/each}}
+        </select>
+
+    <label for="ticketIdSearch">Ticket ID</label>
+    <select name="ticketIdSearch" id="ticketIdSearch">
+        <option value="">Select ticked ID</option>
+        {{#each tickets}}
+            <option value="{{this.ticket_id}}">{{this.ticket_id}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+<script src="./js/edit_agent_has_tickets_db.js"></script>
+
+<script>
+    //get data
+    const data= sessionStorage.getItem('claimed_ticket');
+    const edit_ticket_data= JSON.parse(data);
+    const input_agent_id_element=document.getElementById('agentIDSearch')
+    const input_ticket_id_element=document.getElementById('ticketIdSearch')
+    
+    //assign
+    input_agent_id_element.value=edit_ticket_data.agent_id;
+    input_ticket_id_element.value=edit_ticket_data.ticket_id;
+    
+    
+</script>
+
+
+

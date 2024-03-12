@@ -268,6 +268,40 @@ app.get('/edit_agent', function(req, res)
         res.render('edit_agent');         
                 
 }); 
+
+app.get('/edit_agent_has_tickets', (req, res) => {
+    let agentIDSearch = req.query.agentIDSearch;
+    let agentNameSearch = req.query.agentNameSearch;
+    let ticketIdSearch = req.query.ticketIdSearch;
+
+    let query1 = 'SELECT Agents_has_Tickets.agent_id, Agents.agent_name, Agents_has_Tickets.ticket_id FROM Agents_has_Tickets LEFT JOIN Agents ON Agents_has_Tickets.agent_id=Agents.agent_id';
+
+    if(agentIDSearch){
+        query1 += ` WHERE Agents_has_Tickets.agent_id = ${agentIDSearch}`;
+    }
+
+    else if(agentNameSearch){
+        query1 +=  ` WHERE Agents.agent_name = '${agentNameSearch}'`;
+    }
+
+    else if(ticketIdSearch){
+        query1 += ` WHERE Agents_has_Tickets.ticket_id = ${ticketIdSearch}`;
+    }
+
+    let query2 = 'SELECT * FROM Agents';
+    let query3 = 'SELECT Tickets.ticket_id FROM Tickets INNER JOIN Agents_has_Tickets ON Tickets.ticket_id = Agents_has_Tickets.ticket_id GROUP BY Tickets.ticket_id';
+
+    db.pool.query(query1,function(err, rows, fields){
+        let table = rows
+        db.pool.query(query2, (error, rows, fields) => {
+            let agent = rows
+            db.pool.query(query3, (error, rows, fields) => {
+                let grouped_tickets = rows
+                res.render('edit_agent_has_tickets', {data: table, agents:agent, tickets:grouped_tickets});
+            })
+        })
+    });
+});
 /*
 POST
 
@@ -674,7 +708,7 @@ app.put('/put-agent-ajax',function(req,res,next)
     {
         if (error){
             console.log("error with query_update_ticket");
-            res.sendStatus(400);
+            res.sendStatus(400).send({ message: 'An Agent can not claim ticket twice' });
         }
         else
         {
@@ -688,7 +722,39 @@ app.put('/put-agent-ajax',function(req,res,next)
     }
     )
 });
+app.put('/put_has_ticket_ajax',function(req,res,next)
+{
+    
+    let data =req.body;
+    let agent_id=parseInt(data.id)
+    let ticket_id=parseInt(data.ticket_id)
+    let old_agent_id=parseInt(data.old_id)
+    let old_ticket_id=parseInt(data.old_ticket_id)
+   
+    //console.log(req.body)
+    let query_update_ticket= `UPDATE Agents_has_Tickets SET agent_id=? , ticket_id=? WHERE agent_id=? and ticket_id=?`
+   
+   
+    db.pool.query(query_update_ticket,[agent_id,ticket_id,old_agent_id,old_ticket_id], function(error,rows,fields)
+    {
+        
+        
+        if (error){
+            console.log("error with query_update_agent_has_tickets");
+            res.sendStatus(400);
+        }
+        else
+        {
+            
+            console.log(rows)
+            
+            res.send(rows);
+            
+        }
 
+    }
+    )
+});
 /*
 Handlebars helpers
 */
