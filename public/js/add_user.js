@@ -13,7 +13,7 @@ addTicketForm.addEventListener("submit", function (e) {
     let input_user_email=document.getElementById("input-user_email");
     let input_user_phone=document.getElementById("input-user_Phone_number");
     
-    
+   
     // Get the values from the form fields
     let input_user_value = input_user_name.value;
     let input_email_value = input_user_email.value;
@@ -40,8 +40,9 @@ addTicketForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
             
             // Clear the input fields for another transaction
-            input_tag.value = '';
-            
+            input_user_name.value = '';
+            input_user_email.value= '';
+            input_user_phone.value='';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the inputing a new user.")
@@ -76,12 +77,9 @@ addRowToTable = (input) => {
     properties.forEach((prop) => {
         // Create a new cell
         let cell = document.createElement("TD");
-        // let deleteCell = document.createElement("TD");
-        // let editCell= document.createElement("TD");
-        // Set the cell's content to the corresponding property value of newRow
       
       
-        cell.innerHTML = newRow[prop]; // Use innerHTML or innerText depending on your content
+        cell.innerHTML = newRow[prop]; 
          
         
         
@@ -90,20 +88,7 @@ addRowToTable = (input) => {
         row.appendChild(cell);
        
     });
-    // editCell=document.createElement("button");
-    //     editCell.innerHTML="Edit";
-    //     // deleteCell.onclick=function(){
     
-    //     // }
-    // deleteCell = document.createElement("button");
-    //     deleteCell.innerHTML = "Delete";
-    //     deleteCell.onclick = function(){
-    //         delete_row(newRow.id);
-    //     };
-    // // Append the row to the table
-    // row.appendChild(editCell);
-    // row.appendChild(deleteCell);
-    // row.setAttribute('data-value',newRow.id);
     currentTable.appendChild(row);
     location.reload();
    

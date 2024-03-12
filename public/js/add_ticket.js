@@ -101,7 +101,7 @@ addRowToTable = (input) => {
             cell.innerHTML=translate_status
             }
         else{
-            cell.innerHTML = newRow[prop]; // Use innerHTML or innerText depending on your content
+            cell.innerHTML = newRow[prop]; 
          
         }
         
@@ -110,20 +110,7 @@ addRowToTable = (input) => {
         row.appendChild(cell);
        
     });
-    // editCell=document.createElement("button");
-    //     editCell.innerHTML="Edit";
-    //     // deleteCell.onclick=function(){
-    
-    //     // }
-    // deleteCell = document.createElement("button");
-    //     deleteCell.innerHTML = "Delete";
-    //     deleteCell.onclick = function(){
-    //         delete_row(newRow.id);
-    //     };
-    // // Append the row to the table
-    // row.appendChild(editCell);
-    // row.appendChild(deleteCell);
-    // row.setAttribute('data-value',newRow.id);
+   
     currentTable.appendChild(row);
     location.reload();
    

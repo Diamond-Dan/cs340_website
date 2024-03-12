@@ -233,7 +233,8 @@ app.get('/agents', (req, res) => {
         
     });
     }); 
-
+    
+// Edit page
 
 app.get('/edit_tickets', function(req, res)              
 {
@@ -326,8 +327,8 @@ app.post('/add-tags-ajax',function(req,res){
     // let tag_name = (data.tag_name);
     // console.log(tag_name)
    
-    let add_tag_query=`INSERT INTO Tags (tag_type) VALUES ('${data.tag_name}')`;
-    db.pool.query(add_tag_query, function(error, result) {
+    let add_tag_query=`INSERT INTO Tags (tag_type) VALUES (?)`;
+    db.pool.query(add_tag_query, [data.tag_name], function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);
@@ -360,8 +361,8 @@ app.post('/add-users-ajax',function(req,res){
     // let tag_name = (data.tag_name);
     // console.log(tag_name)
    
-    let add_tag_query=`INSERT INTO Users (user_name,user_email,user_Phone_number) VALUES ('${data.user}','${data.email}',${data.phone})`;
-    db.pool.query(add_tag_query, function(error, result) {
+    let add_tag_query=`INSERT INTO Users (user_name,user_email,user_Phone_number) VALUES (?,?,?)`;
+    db.pool.query(add_tag_query, [data.user,data.email,data.phone],  function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);
@@ -434,8 +435,8 @@ app.post('/add-agent-ajax',function(req,res){
     let data=req.body
  
    
-    let add_tag_query=`INSERT INTO Agents (agent_name) VALUES ('${data.agent_name}')`;
-    db.pool.query(add_tag_query, function(error, result) {
+    let add_tag_query=`INSERT INTO Agents (agent_name) VALUES (?)`;
+    db.pool.query(add_tag_query,[data.agent_name], function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);
@@ -480,8 +481,8 @@ app.post('/claim-ticket-ajax', function(req, res) {
     }
 
     // insert into intersection table
-    let claimTicketQuery = `INSERT INTO Agents_has_Tickets (agent_id, ticket_id) VALUES (${agentId}, ${ticketId})`;
-    db.pool.query(claimTicketQuery, function(error, result) {
+    let claimTicketQuery = `INSERT INTO Agents_has_Tickets (agent_id, ticket_id) VALUES (?,?)`;
+    db.pool.query(claimTicketQuery,[agentId, ticketId], function(error, result) {
         // Check to see if there was an error
         if (error) {
             console.log(error);

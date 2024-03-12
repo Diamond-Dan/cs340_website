@@ -83,12 +83,10 @@ addRowToTable = (input) => {
     properties.forEach((prop) => {
         // Create a new cell
         let cell = document.createElement("TD");
-        // let deleteCell = document.createElement("TD");
-        // let editCell= document.createElement("TD");
-        // Set the cell's content to the corresponding property value of newRow
+  
       
       
-        cell.innerHTML = newRow[prop]; // Use innerHTML or innerText depending on your content
+        cell.innerHTML = newRow[prop];
          
         
         

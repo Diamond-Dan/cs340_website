@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (xhttp .readyState === 4 && xhttp .status === 200) {
                 window.alert('Ticket claimed successfully.');
             } else if (xhttp .readyState === 4) {
-                window.alert('An error occurred while claiming the ticket.');
+                window.alert('An error occurred while claiming the ticket. Make sure the ticket is not claimed by the same agent twice');
             }
         };
         let data = JSON.stringify({ agent_id: agentId, ticket_id: ticketId });
