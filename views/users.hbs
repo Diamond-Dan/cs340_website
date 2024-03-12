@@ -56,10 +56,10 @@
 <p>To add a new user, please enter the user information below and click 'Submit'!</p>
 <form id="add-user-form-ajax">
     <label for="input-user_name">User Name: </label>
-    <input type="text" name="input-user_name" id="input-user_name">
+    <input type="text" name="input-user_name" id="input-user_name" required>
     
     <label for="input-user_email">User Email: </label>
-    <input type="text" name="input-user_email" id="input-user_email">
+    <input type="text" name="input-user_email" id="input-user_email" required>
 
     <label for="input-user_Phone_number">User Phone number: </label>
     <input type="text" name="input-user_Phone_number" id="input-user_Phone_number" pattern="[0-9]+" maxlength="15" minlength="10">
@@ -71,7 +71,7 @@
 
 <form action="/users" method="get">
     <h2>search</h2>
-    <p>can only search by one</p>
+    <p>Can only search by one user:</p>
     <label for="name">Name</label>
     <input type="text" id="name" name="name">
     <input type="submit" value="Submit">
