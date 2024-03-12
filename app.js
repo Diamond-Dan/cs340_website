@@ -198,34 +198,9 @@ app.post('/add-ticket-ajax', function(req, res)
     })
 });
 
-app.post('/claim-ticket-ajax', function(req, res) {
-    let data = req.body;
-
-    // check for nulls
-    let agentId = parseInt(data.agent_id);
-    if (isNaN(agentId)) {
-        agentId = null;
-    }
-
-    let ticketId = parseInt(data.ticket_id);
-    if (isNaN(ticketId)) {
-        res.status(400).send({ message: 'Ticket ID is required.' });
-        return;
-    }
-
-    // insert into intersection table
-    let claimTicketQuery = `INSERT INTO Agents_has_Tickets (agent_id, ticket_id) VALUES (${agentId}, ${ticketId})`;
-    db.pool.query(claimTicketQuery, function(error, result) {
-        // Check to see if there was an error
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.status(200).send({ message: 'Ticket claimed successfully.' });
-        }
-    });
-});
-
+app.post("/claim-ticket-ajax", function(req, res){
+    let date = req.body;
+})
 
 
 /*
