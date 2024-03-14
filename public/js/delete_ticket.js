@@ -1,4 +1,4 @@
-
+//  Based on https://github.com/osu-cs340-ecampus/nodejs-starter-app 
 function delete_ticket(ticket_id){
 
     let data={

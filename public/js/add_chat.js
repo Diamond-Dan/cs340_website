@@ -1,4 +1,5 @@
 // Get the objects we need to modify
+//  Based on https://github.com/osu-cs340-ecampus/nodejs-starter-app 
 let addTicketForm = document.getElementById('add-chat-form-ajax');
 
 // Modify the objects we need

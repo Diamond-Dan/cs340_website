@@ -1,5 +1,6 @@
 
 // Get the objects we need to modify
+//  Based on https://github.com/osu-cs340-ecampus/nodejs-starter-app 
 let updatePersonForm = document.getElementById('edit-user-form-ajax');
 
 // Modify the objects we need

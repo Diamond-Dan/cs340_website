@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('add_agent_ticket_table').addEventListener('submit', function(e) {
         e.preventDefault();
