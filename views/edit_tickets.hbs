@@ -10,13 +10,18 @@
         
 
     
-    <label for="input-user-id">User id: </label>
-    <select id="input-user_id" disabled="true" >
+    <label for="input-user_id">User id:
+        <input type="text" name="input-user_id" id="input-user_id" size="5" disabled="true" readonly> 
+        
+        
+         </label>
+    
+    {{!-- <select id="input-user_id" disabled="true" >
         <option id=user_id_place>select a user id</option>
         {{#each user_ids}}
         <option value="{{this.user_id}}">{{this.user_id}}</option>
         {{/each}}
-    </select>
+    </select> --}}
 
     
     <label for="input-ticket_subject">Ticket subject: </label>
@@ -56,15 +61,14 @@
     const ticket_data= JSON.parse(data);
     console.log(data)
     const ticket_id_places_element=document.getElementById('ticket_id_place');
-    const user_id_place_element=document.getElementById('user_id_place');
+    const user_id_place_element=document.getElementById('input-user_id');
     const input_ticket_subject_element=document.getElementById('ticket_subject')
     const input_ticket_body_element=document.getElementById('ticket_body')
     const input_option_element=document.getElementById('input-option')
     const input_ticket_tag_element=document.getElementById('input-tag_name')
     //assign
     ticket_id_places_element.value=ticket_data.id;
-    ticket_id_places_element.textContent=ticket_data.id;
-    user_id_place_element.textContent=ticket_data.user_id;
+    user_id_place_element.value=ticket_data.user_id;
     input_ticket_subject_element.value=ticket_data.subject;
     input_ticket_body_element.value=ticket_data.body;
     input_option_element.value=ticket_data.status;
