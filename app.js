@@ -1,7 +1,7 @@
 // App.js
 
 /*
-used https://www.youtube.com/watch?v=qU-IW0aPw3k as a guide to render page and dropdowns while also implementing search
+used https://github.com/osu-cs340-ecampus/nodejs-starter-app as a guide to render page and dropdowns while also implementing search
 */
 /*
     SETUP
