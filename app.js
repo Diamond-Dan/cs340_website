@@ -2,6 +2,7 @@
 
 /*
 used https://github.com/osu-cs340-ecampus/nodejs-starter-app as a guide to render page and dropdowns while also implementing search
+where found out to use ? for passed in values https://stackoverflow.com/questions/35600813/when-to-use-and-as-placeholders-in-node-mysql-for-building-a-query
 */
 /*
     SETUP
