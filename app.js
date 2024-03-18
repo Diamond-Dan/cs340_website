@@ -1,6 +1,9 @@
 // App.js
 
 /*
+used https://www.youtube.com/watch?v=qU-IW0aPw3k as a guide to render page and dropdowns while also implementing search
+*/
+/*
     SETUP
 */
 var express = require('express');   // We are using the express library for the web server
